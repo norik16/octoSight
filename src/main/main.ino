@@ -20,28 +20,91 @@
 #include "main.h"
 #include "config.h"
 
+#include "otherSensors.h"
+#include "ultraSensors.h"
+
 const int stepsPerRevolution = 200;  // change this to fit the number of steps per revolution
 // for your motor
 
-
-
-#define ultraSound 1;
-
-
-// initialize the stepper library on pins 8 through 11:
-Stepper myStepper(stepsPerRevolution, 8,9,10,11);            
-
 int stepCount = 0;  // number of steps the motor has taken
 
-void setup() {
-    // Sets the two pins as Outputs
+void setup()
+{
+    //set pins as output
+    
+    //wheels
     pinMode(leftDir, OUTPUT);
     pinMode(leftStep, OUTPUT);
     pinMode(rightDir, OUTPUT);
     pinMode(rightStep, OUTPUT);
+    
+    //fan
+    pinMode(fan, OUTPUT);
+    
+    
+    //input analog
+    
+    //IR candle from right to left
+    pinMode(IR0, INPUT);
+    pinMode(IR1, INPUT);
+    pinMode(IR2, INPUT);
+    
+    
+    //input digital
+    
+    //ultra sound from
+    pinMode(US0in, INPUT);
+    pinMode(US0out, INPUT);
+    pinMode(US1in, INPUT);
+    pinMode(US1out, INPUT);
+    
+    //IR line from right to left
+    pinMode(lineSensor0, INPUT);
+    pinMode(lineSensor1, INPUT);
+    pinMode(lineSensor2, INPUT);
+    pinMode(lineSensor3, INPUT);
+    pinMode(lineSensor4, INPUT);
+    
+    //bumper from right to left
+    pinMode(bmp0, INPUT);
+    pinMode(bmp1, INPUT);
+    
+    //switch
+    pinMode(power, INPUT);
+
 }
 
-void loop() {
+void go(int l, int angle)
+{
+    if (l > 0) {
+        digitalWrite(leftDir, HIGH);
+        digitalWrite(rightDir, HIGH);
+
+        int right = 0;
+
+        int left = 0;
+
+        for(int x = 0; x < l * stepsPerCm * max(); x++) {
+            digitalWrite(leftStep, HIGH);
+            digitalWrite(rightStep, HIGH);
+            delayMicroseconds(500);
+            digitalWrite(leftStep, LOW);
+            digitalWrite(rightStep, LOW);
+            delayMicroseconds(500);
+        }
+    } else if (l < 0) {
+        digitalWrite(leftDir, LOW);
+        digitalWrite(rightDir, LOW);
+    } else {
+
+    }
+    l > 0 ? digitalWrite(leftDir, HIGH) : digitalWrite(leftDir, LOW);
+    l > 0 ? digitalWrite(leftDir, HIGH) : digitalWrite(leftDir, LOW);
+
+}
+
+void loop()
+{
   // read the sensor value:
   int sensorReading = analogRead(A0);
   // map it to a range from 0 to 100:
