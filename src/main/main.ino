@@ -17,10 +17,15 @@
  
  */
 
-#include <Stepper.h>
+#include "main.h"
+#include "config.h"
 
 const int stepsPerRevolution = 200;  // change this to fit the number of steps per revolution
 // for your motor
+
+
+
+#define ultraSound 1;
 
 
 // initialize the stepper library on pins 8 through 11:
@@ -29,7 +34,11 @@ Stepper myStepper(stepsPerRevolution, 8,9,10,11);
 int stepCount = 0;  // number of steps the motor has taken
 
 void setup() {
-  // nothing to do inside the setup
+    // Sets the two pins as Outputs
+    pinMode(leftDir, OUTPUT);
+    pinMode(leftStep, OUTPUT);
+    pinMode(rightDir, OUTPUT);
+    pinMode(rightStep, OUTPUT);
 }
 
 void loop() {
