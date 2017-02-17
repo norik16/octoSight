@@ -19,6 +19,8 @@
 
 #include "main.h"
 #include "config.h"
+#include "otherSensors.h"
+#include "ultraSensors.h"
 
 const int stepsPerRevolution = 200;  // change this to fit the number of steps per revolution
 // for your motor
