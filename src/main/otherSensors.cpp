@@ -3,3 +3,14 @@
 //
 
 #include "otherSensors.h"
+
+void initSensors()
+{
+  
+}
+
+void runSensors()
+{
+  
+}
+

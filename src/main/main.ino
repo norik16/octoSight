@@ -19,6 +19,8 @@
 
 #include "main.h"
 #include "config.h"
+#include "otherSensors.h"
+#include "ultraSensors.h"
 
 #include "otherSensors.h"
 #include "ultraSensors.h"
