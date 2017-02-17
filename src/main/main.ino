@@ -1,21 +1,6 @@
-
-/* 
- Stepper Motor Control - speed control
- 
- This program drives a unipolar or bipolar stepper motor. 
- The motor is attached to digital pins 8 - 11 of the Arduino.
- A potentiometer is connected to analog input 0.
- 
- The motor will rotate in a clockwise direction. The higher the potentiometer value,
- the faster the motor speed. Because setSpeed() sets the delay between steps, 
- you may notice the motor is less responsive to changes in the sensor value at
- low speeds.
- 
- Created 30 Nov. 2009
- Modified 28 Oct 2010
- by Tom Igoe;
- 
- */
+//
+// Created by ronald on 17.2.17.
+//
 
 #include "main.h"
 #include "config.h"
@@ -24,11 +9,6 @@
 
 #include "otherSensors.h"
 #include "ultraSensors.h"
-
-const int stepsPerRevolution = 200;  // change this to fit the number of steps per revolution
-// for your motor
-
-int stepCount = 0;  // number of steps the motor has taken
 
 void setup()
 {
@@ -78,31 +58,67 @@ void setup()
 
 void go(int l, int angle)
 {
-    if (l > 0) {
-        digitalWrite(leftDir, HIGH);
-        digitalWrite(rightDir, HIGH);
+    l > 0 ? digitalWrite(rightDir, HIGH) : digitalWrite(rightDir, LOW);
+    l > 0 ? digitalWrite(leftDir, HIGH) : digitalWrite(leftDir, LOW);
 
-        int right = 0;
+    if (l) {
+        l = abs(l);
 
-        int left = 0;
+        if (angle > 0) {
+            int right = l * stepsPerCm;
+            int left = right * (1 - (2*d*pi*angle)/right);
 
-        for(int x = 0; x < l * stepsPerCm * max(); x++) {
-            digitalWrite(leftStep, HIGH);
-            digitalWrite(rightStep, HIGH);
-            delayMicroseconds(500);
-            digitalWrite(leftStep, LOW);
-            digitalWrite(rightStep, LOW);
-            delayMicroseconds(500);
+            int rBaseDelay = mDelay;
+            int lBaseDelay = mDelay * (right/left);
+
+        } else {
+            int left = l * stepsPerCm;
+            int right = left * (1 - (2*d*pi*abs(angle))/left);
+
+            int rBaseDelay = mDelay * (left/right);
+            int lBaseDelay = mDelay;
         }
-    } else if (l < 0) {
-        digitalWrite(leftDir, LOW);
-        digitalWrite(rightDir, LOW);
+
+        int rDelay = rBaseDelay;
+        int lDelay = lBaseDelay;
+
+        bool rHigh = 1;
+        bool lHigh = 1;
+
+        while (left and right) {
+            actDelay = min(rDelay, lDelay);
+            rDelay -= actDelay;
+            lDelay -= actDelay;
+
+            if (!rDelay) {
+                if (rHigh) {
+                    digitalWrite(rightStep, HIGH);
+                } else {
+                    digitalWrite(rightStep, LOW);
+                    right--;
+                }
+                rDelay = rBaseDelay;
+                rHigh = !rHigh;
+            }
+
+            if (!lDelay) {
+                if (lHigh) {
+                    digitalWrite(leftStep, HIGH);
+                } else {
+                    digitalWrite(leftStep, LOW);
+                    left--;
+                }
+                lDelay = lBaseDelay;
+                lHigh = !lHigh;
+            }
+        }
     } else {
+        angle > 0 ? digitalWrite(rightDir, HIGH) : digitalWrite(rightDir, LOW);
+        angle > 0 ? digitalWrite(leftDir, LOW) : digitalWrite(leftDir, HIGH);
 
+        int right = 2*pi*d*abs(angle)*stepsPerCm;
+        int left = right;
     }
-    l > 0 ? digitalWrite(leftDir, HIGH) : digitalWrite(leftDir, LOW);
-    l > 0 ? digitalWrite(leftDir, HIGH) : digitalWrite(leftDir, LOW);
-
 }
 
 void loop()

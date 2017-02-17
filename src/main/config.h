@@ -11,6 +11,8 @@
 //constants
 const int stepsPerCm = 30;
 const int d = 30; //wheel to wheel
+const int pi = 3.141592;
+const int mDelay = 500;
 
 //wheels
 #define leftDir 1;
