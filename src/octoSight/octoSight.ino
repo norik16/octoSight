@@ -53,12 +53,15 @@ void setup()
     pinMode(powerPin, INPUT);
 
     Serial.begin(9600);
+
+    initSensors();
+    initUltra();
 }
 
 void go(int l, int angle)
 {
-    l > 0 ? digitalWrite(rightDir, HIGH) : digitalWrite(rightDir, LOW);
-    l > 0 ? digitalWrite(leftDir, HIGH) : digitalWrite(leftDir, LOW);
+    l > 0 ? digitalWrite(rightDirPin, HIGH) : digitalWrite(rightDirPin, LOW);
+    l > 0 ? digitalWrite(leftDirPin, HIGH) : digitalWrite(leftDirPin, LOW);
 
     if (l) {
         l = abs(l);
@@ -88,16 +91,16 @@ void go(int l, int angle)
         bool rHigh = 1;
         bool lHigh = 1;
 
-        while (left and right) {
+        while (left >= 0 and right >= 0) {
             int actDelay = min(rDelay, lDelay);
             rDelay -= actDelay;
             lDelay -= actDelay;
 
             if (!rDelay) {
                 if (rHigh) {
-                    digitalWrite(rightStep, HIGH);
+                    digitalWrite(rightStepPin, HIGH);
                 } else {
-                    digitalWrite(rightStep, LOW);
+                    digitalWrite(rightStepPin, LOW);
                     right--;
                 }
                 rDelay = rBaseDelay;
@@ -106,9 +109,9 @@ void go(int l, int angle)
 
             if (!lDelay) {
                 if (lHigh) {
-                    digitalWrite(leftStep, HIGH);
+                    digitalWrite(leftStepPin, HIGH);
                 } else {
-                    digitalWrite(leftStep, LOW);
+                    digitalWrite(leftStepPin, LOW);
                     left--;
                 }
                 lDelay = lBaseDelay;
@@ -116,8 +119,8 @@ void go(int l, int angle)
             }
         }
     } else {
-        angle > 0 ? digitalWrite(rightDir, HIGH) : digitalWrite(rightDir, LOW);
-        angle > 0 ? digitalWrite(leftDir, LOW) : digitalWrite(leftDir, HIGH);
+        angle > 0 ? digitalWrite(rightDirPin, HIGH) : digitalWrite(rightDirPin, LOW);
+        angle > 0 ? digitalWrite(leftDirPin, LOW) : digitalWrite(leftDirPin, HIGH);
 
         int right = 2*pi*d*abs(angle)*stepsPerCm;
         int left = right;
@@ -131,8 +134,11 @@ void go(int l)
 
 void loop()
 {
-  runSensors();
-  printSensors();
+  //runSensors();
+  //printSensors();
+
+  go(5);
+  delay(1000);
 }
 
 
