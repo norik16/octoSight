@@ -93,20 +93,24 @@ void go(int l, int angle)
             lBaseDelay = mDelay;
         }
 
-        Serial.print(rDelay);
-        Serial.print(" ");
-        Serial.print(lDelay);
-        Serial.println(" ");
-
     } else {
         angle > 0 ? digitalWrite(rightDirPin, HIGH) : digitalWrite(rightDirPin, LOW);
         angle > 0 ? digitalWrite(leftDirPin, LOW) : digitalWrite(leftDirPin, HIGH);
 
         right = M_PI*d*abs(angle)*stepsPerCm/180;
-        left = rBaseDelay;
+        left = right;
 
         rBaseDelay = mDelay;
         lBaseDelay = mDelay;
+
+        Serial.print(rDelay);
+        Serial.print(" ");
+        Serial.print(lDelay);
+        Serial.print(" ");
+        Serial.print(right);
+        Serial.print(" ");
+        Serial.print(left);
+        Serial.println(" ");
     }
 
     rDelay = rBaseDelay;
@@ -125,6 +129,11 @@ void go(int l, int angle)
                 digitalWrite(rightStepPin, LOW);
                 right--;
             }
+            
+/*        Serial.print(rHigh);
+        Serial.print(" ");
+        Serial.print(actDelay);
+        Serial.println(" ");*/
             rDelay = rBaseDelay;
             rHigh = !rHigh;
         }
@@ -136,6 +145,10 @@ void go(int l, int angle)
                 digitalWrite(leftStepPin, LOW);
                 left--;
             }
+/*        Serial.print(lHigh);
+        Serial.print(" ");
+        Serial.print(actDelay);
+        Serial.println(" ");*/
             lDelay = lBaseDelay;
             lHigh = !lHigh;
         }
