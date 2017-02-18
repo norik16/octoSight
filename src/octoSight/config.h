@@ -6,7 +6,6 @@
 #define OCTOSIGHT_CONFIG_H
 
 
-//output
 
 //constants
 const int stepsPerCm = 30;
@@ -14,44 +13,45 @@ const int d = 30; //wheel to wheel
 const int pi = 3.141592;
 const int mDelay = 500;
 
+
+//output
+
 //wheels
-#define leftDir 1
-#define leftStep 1
-#define rightDir 1
-#define rightStep 1
+#define leftDirPin 1
+#define leftStepPin 1
+#define rightDirPin 1
+#define rightStepPin 1
 
 //fan
-#define fan 1
+#define fanPin 1
 
 
 //input analog
 
 //IR candle from right to left
-#define IR0 1
-#define IR1 1
-#define IR2 1
+#define IR0Pin 1
+#define IR1Pin 1
+#define IR2Pin 1
 
 
 //input digital
 
 //ultra sound from
-#define US0in 1
-#define US0out 1
-#define US1in 1
-#define US1out 1
+#define US0inPin 1
+#define US0outPin 1
+#define US1inPin 1
 
 //IR line from right to left
-#define lineSensor0 0
-#define lineSensor1 1
-#define lineSensor2 2
-#define lineSensor3 3
-#define lineSensor4 4
+#define line0Pin 1
+#define line2Pin 1
+#define line3Pin 1
+#define line4Pin 1
 
 //bumper from right to left
-#define bmp0 1
-#define bmp1 1
+#define bmp0Pin 1
+#define bmp1Pin 1
 
 //switch
-#define power 1
+#define powerPin 1
 
 #endif //OCTOSIGHT_CONFIG_H

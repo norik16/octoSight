@@ -13,44 +13,44 @@ void setup()
     //set pins as output
     
     //wheels
-    pinMode(leftDir, OUTPUT);
-    pinMode(leftStep, OUTPUT);
-    pinMode(rightDir, OUTPUT);
-    pinMode(rightStep, OUTPUT);
+    pinMode(leftDirPin, OUTPUT);
+    pinMode(leftStepPin, OUTPUT);
+    pinMode(rightDirPin, OUTPUT);
+    pinMode(rightStepPin, OUTPUT);
     
     //fan
-    pinMode(fan, OUTPUT);
+    pinMode(fanPin, OUTPUT);
     
     
     //input analog
     
     //IR candle from right to left
-    pinMode(IR0, INPUT);
-    pinMode(IR1, INPUT);
-    pinMode(IR2, INPUT);
+    pinMode(IR0Pin, INPUT);
+    pinMode(IR1Pin, INPUT);
+    pinMode(IR2Pin, INPUT);
     
     
     //input digital
     
     //ultra sound from
-    pinMode(US0in, INPUT);
-    pinMode(US0out, INPUT);
-    pinMode(US1in, INPUT);
-    pinMode(US1out, INPUT);
+    pinMode(US0inPin, INPUT);
+    pinMode(US0outPin, INPUT);
+    pinMode(US1inPin, INPUT);
+    pinMode(US1outPin, INPUT);
     
     //IR line from right to left
-    pinMode(lineSensor0, INPUT);
-    pinMode(lineSensor1, INPUT);
-    pinMode(lineSensor2, INPUT);
-    pinMode(lineSensor3, INPUT);
-    pinMode(lineSensor4, INPUT);
+    pinMode(line0Pin, INPUT);
+    pinMode(line1Pin, INPUT);
+    pinMode(line2Pin, INPUT);
+    pinMode(line3Pin, INPUT);
+    pinMode(line4Pin, INPUT);
     
     //bumper from right to left
-    pinMode(bmp0, INPUT);
-    pinMode(bmp1, INPUT);
+    pinMode(bmp0Pin, INPUT);
+    pinMode(bmp1Pin, INPUT);
     
     //switch
-    pinMode(power, INPUT);
+    pinMode(powerPin, INPUT);
 
     Serial.begin(9600);
 }

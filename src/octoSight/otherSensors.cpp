@@ -17,11 +17,11 @@ void initSensors()
 
 void runSensors()
 {
-  line0 = digitalRead(lineSensor0);
-  line1 = digitalRead(lineSensor1);
-  line2 = digitalRead(lineSensor2);
-  line3 = digitalRead(lineSensor3);
-  line4 = digitalRead(lineSensor4);
+  line0 = digitalRead(line0Pin);
+  line1 = digitalRead(line1Pin);
+  line2 = digitalRead(line2Pin);
+  line3 = digitalRead(line3Pin);
+  line4 = digitalRead(line4Pin);
 }
 
 void printSensors()
