@@ -5,4 +5,6 @@
 #ifndef OCTOSIGHT_UTRASENSORS_H
 #define OCTOSIGHT_UTRASENSORS_H
 
+#include "arduino.h"
+
 #endif //OCTOSIGHT_UTRASENSORS_H
