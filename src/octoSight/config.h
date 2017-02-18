@@ -8,7 +8,7 @@
 
 
 //constants
-const int stepsPerCm = 5;
+const float stepsPerCm = 5;
 const int d = 30; //wheel to wheel
 const int pi = 3.141592;
 

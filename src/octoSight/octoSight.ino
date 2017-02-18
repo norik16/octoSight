@@ -61,8 +61,8 @@ void go(int l, int angle)
 {
     int rBaseDelay;
     int lBaseDelay;
-    int right;
-    int left;
+    float right;
+    float left;
 
     int rDelay;
     int lDelay;
@@ -83,13 +83,13 @@ void go(int l, int angle)
             left = right * (1 - (2*d*pi*angle)/right);
 
             rBaseDelay = mDelay;
-            lBaseDelay = mDelay * (right/left);
+            lBaseDelay = (int) (mDelay * (right/left));
 
         } else {
             left = l * stepsPerCm;
             right = left * (1 - (2*d*pi*abs(angle))/left);
 
-            rBaseDelay = mDelay * (left/right);
+            rBaseDelay = (int) (mDelay * (left/right));
             lBaseDelay = mDelay;
         }
 

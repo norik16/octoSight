@@ -102,4 +102,7 @@ void solveCandle()
     }
 
     digitalWrite(fanPin, HIGH);
+    go(0, 10);
+    go(0, -20);
+
 }
