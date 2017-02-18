@@ -8,11 +8,11 @@
 
 
 //constants
-const int stepsPerCm = 3000;
+const int stepsPerCm = 5;
 const int d = 30; //wheel to wheel
 const int pi = 3.141592;
 
-const int mDelay = 500;
+const int mDelay = 2000;
 const int lineBaseDelay = 100000;
 
 

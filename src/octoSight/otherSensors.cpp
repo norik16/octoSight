@@ -13,11 +13,11 @@ void initSensors()
 
 void runSensors()
 {
-  line0 = digitalRead(line0Pin);
-  line1 = digitalRead(line1Pin);
-  line2 = digitalRead(line2Pin);
-  line3 = digitalRead(line3Pin);
-  line4 = digitalRead(line4Pin);
+  line[0] = digitalRead(line0Pin);
+  line[1] = digitalRead(line1Pin);
+  line[2] = digitalRead(line2Pin);
+  line[3] = digitalRead(line3Pin);
+  line[4] = digitalRead(line4Pin);
 }
 
 void printSensors()

@@ -7,6 +7,6 @@
 
 #include "math.h"
 
-void angleToLine(int a, int b);
+float angleToLine(int a, int b);
 
 #endif //MAIN_HELPERFUNCTIONS_H

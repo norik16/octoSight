@@ -97,6 +97,11 @@ void go(int l, int angle)
         bool rHigh = 1;
         bool lHigh = 1;
 
+        Serial.print(rDelay);
+        Serial.print(" ");
+        Serial.print(lDelay);
+        Serial.println(" ");
+
         while (left >= 0 and right >= 0) {
             int actDelay = min(rDelay, lDelay);
             rDelay -= actDelay;
@@ -131,6 +136,8 @@ void go(int l, int angle)
                     metLine();
                 }
             }
+
+            delayMicroseconds(actDelay);
         }
     } else {
         angle > 0 ? digitalWrite(rightDirPin, HIGH) : digitalWrite(rightDirPin, LOW);
@@ -151,8 +158,8 @@ void loop()
   //runSensors();
   //printSensors();
 
-  go(5);
-  delay(1000);
+  go(50);
+  delay(5000);
 }
 
 

@@ -17,8 +17,8 @@ coords lineC[5] = { //from right to left
 
 float angleToLine(int a, int b)
 {
-    k = (lineC[a].y - lineC[b].y)/(lineC[a].x - lineC[b].x);
+    float k = (lineC[a].y - lineC[b].y)/(lineC[a].x - lineC[b].x);
 
-    return asin(k/sqrt(pow(k, 2) - pow(lineC[a].x - lineC[b].x, 2)))*180/pi;
+    return asin(k/sqrt(pow(k, 2) - pow(lineC[a].x - lineC[b].x, 2)))*180/M_PI;
 }
 
