@@ -5,6 +5,7 @@
 #include "otherSensors.h"
 
 bool line[5];
+bool flame[5];
 
 void initSensors()
 {

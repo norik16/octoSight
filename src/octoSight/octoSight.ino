@@ -6,11 +6,6 @@
 //#include <arduino.h>
 
 #include "octoSight.h"
-#include "config.h"
-
-#include "otherSensors.h"
-#include "ultraSensors.h"
-#include "states.h"
 
 void setup()
 {
@@ -64,15 +59,24 @@ void setup()
 
 void go(int l, int angle)
 {
-    l > 0 ? digitalWrite(rightDirPin, HIGH) : digitalWrite(rightDirPin, LOW);
-    l > 0 ? digitalWrite(leftDirPin, HIGH) : digitalWrite(leftDirPin, LOW);
+    int rBaseDelay;
+    int lBaseDelay;
+    int right;
+    int left;
+
+    int rDelay;
+    int lDelay;
+
+    int lineDelay = lineBaseDelay;
+
+    bool rHigh = 1;
+    bool lHigh = 1;
 
     if (l) {
+        l > 0 ? digitalWrite(rightDirPin, HIGH) : digitalWrite(rightDirPin, LOW);
+        l > 0 ? digitalWrite(leftDirPin, HIGH) : digitalWrite(leftDirPin, LOW);
+
         l = abs(l);
-        int rBaseDelay;
-        int lBaseDelay;
-        int right;
-        int left;
 
         if (angle > 0) {
             right = l * stepsPerCm;
@@ -89,62 +93,59 @@ void go(int l, int angle)
             lBaseDelay = mDelay;
         }
 
-        int rDelay = rBaseDelay;
-        int lDelay = lBaseDelay;
-
-        int lineDelay = lineBaseDelay;
-
-        bool rHigh = 1;
-        bool lHigh = 1;
-
         Serial.print(rDelay);
         Serial.print(" ");
         Serial.print(lDelay);
         Serial.println(" ");
 
-        while (left >= 0 and right >= 0) {
-            int actDelay = min(rDelay, lDelay);
-            rDelay -= actDelay;
-            lDelay -= actDelay;
-            lineDelay -= actDelay;
-
-            if (rDelay <= 0) {
-                if (rHigh) {
-                    digitalWrite(rightStepPin, HIGH);
-                } else {
-                    digitalWrite(rightStepPin, LOW);
-                    right--;
-                }
-                rDelay = rBaseDelay;
-                rHigh = !rHigh;
-            }
-
-            if (lDelay <= 0) {
-                if (lHigh) {
-                    digitalWrite(leftStepPin, HIGH);
-                } else {
-                    digitalWrite(leftStepPin, LOW);
-                    left--;
-                }
-                lDelay = lBaseDelay;
-                lHigh = !lHigh;
-            }
-
-            if (lineDelay <= 0) {
-                runSensors();
-                if (line[0] or line[1] or line[2] or line[3] or line[4]) {
-                    metLine();
-                }
-            }
-
-            delayMicroseconds(actDelay);
-        }
     } else {
         angle > 0 ? digitalWrite(rightDirPin, HIGH) : digitalWrite(rightDirPin, LOW);
         angle > 0 ? digitalWrite(leftDirPin, LOW) : digitalWrite(leftDirPin, HIGH);
 
-        int right = 2*pi*d*abs(angle)*stepsPerCm;
-        int left = right;
+        rBaseDelay = 2*pi*d*abs(angle)*stepsPerCm;
+        lBaseDelay = right;
+    }
+
+    rDelay = rBaseDelay;
+    lDelay = lBaseDelay;
+
+    while (left >= 0 and right >= 0) {
+        int actDelay = min(rDelay, lDelay);
+        rDelay -= actDelay;
+        lDelay -= actDelay;
+        lineDelay -= actDelay;
+
+        if (rDelay <= 0) {
+            if (rHigh) {
+                digitalWrite(rightStepPin, HIGH);
+            } else {
+                digitalWrite(rightStepPin, LOW);
+                right--;
+            }
+            rDelay = rBaseDelay;
+            rHigh = !rHigh;
+        }
+
+        if (lDelay <= 0) {
+            if (lHigh) {
+                digitalWrite(leftStepPin, HIGH);
+            } else {
+                digitalWrite(leftStepPin, LOW);
+                left--;
+            }
+            lDelay = lBaseDelay;
+            lHigh = !lHigh;
+        }
+
+        if (lineDelay <= 0) {
+            runSensors();
+            if (line[0] or line[1] or line[2] or line[3] or line[4]) metLine();
+            if (flame[0] or flame[1] or flame[2] or flame[3] or flame[4]) solveCandle();
+
+            lineDelay = lineBaseDelay;
+        }
+
+        delayMicroseconds(actDelay);
     }
 }
 

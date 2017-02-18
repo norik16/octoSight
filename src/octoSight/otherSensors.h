@@ -9,7 +9,12 @@
 
 #include "config.h"
 
+#include "otherSensors.h"
+#include "ultraSensors.h"
+#include "states.h"
+
 extern bool line[];
+extern bool flame[];
 
 void initSensors();
 void runSensors();
