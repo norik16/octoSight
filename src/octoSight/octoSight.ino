@@ -52,6 +52,7 @@ void setup()
     //switch
     pinMode(power, INPUT);
 
+    Serial.begin(9600);
 }
 
 void go(int l, int angle)
@@ -130,8 +131,8 @@ void go(int l)
 
 void loop()
 {
-
-
+  runSensors();
+  printSensors();
 }
 
 

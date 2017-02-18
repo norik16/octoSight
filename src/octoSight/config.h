@@ -41,11 +41,11 @@ const int mDelay = 500;
 #define US1out 1
 
 //IR line from right to left
-#define lineSensor0 1
-#define lineSensor1 2
-#define lineSensor2 1
-#define lineSensor3 1
-#define lineSensor4 1
+#define lineSensor0 0
+#define lineSensor1 1
+#define lineSensor2 2
+#define lineSensor3 3
+#define lineSensor4 4
 
 //bumper from right to left
 #define bmp0 1
