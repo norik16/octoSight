@@ -2,11 +2,15 @@
 // Created by ronald on 17.2.17.
 //
 
+#include <math.h>
+//#include <arduino.h>
+
 #include "octoSight.h"
 #include "config.h"
 
 #include "otherSensors.h"
 #include "ultraSensors.h"
+#include "states.h"
 
 void setup()
 {
@@ -88,6 +92,8 @@ void go(int l, int angle)
         int rDelay = rBaseDelay;
         int lDelay = lBaseDelay;
 
+        int lineDelay = lineBaseDelay;
+
         bool rHigh = 1;
         bool lHigh = 1;
 
@@ -95,8 +101,9 @@ void go(int l, int angle)
             int actDelay = min(rDelay, lDelay);
             rDelay -= actDelay;
             lDelay -= actDelay;
+            lineDelay -= actDelay;
 
-            if (!rDelay) {
+            if (rDelay <= 0) {
                 if (rHigh) {
                     digitalWrite(rightStepPin, HIGH);
                 } else {
@@ -107,7 +114,7 @@ void go(int l, int angle)
                 rHigh = !rHigh;
             }
 
-            if (!lDelay) {
+            if (lDelay <= 0) {
                 if (lHigh) {
                     digitalWrite(leftStepPin, HIGH);
                 } else {
@@ -116,6 +123,13 @@ void go(int l, int angle)
                 }
                 lDelay = lBaseDelay;
                 lHigh = !lHigh;
+            }
+
+            if (lineDelay <= 0) {
+                runSensors();
+                if (line[0] or line[1] or line[2] or line[3] or line[4]) {
+                    metLine();
+                }
             }
         }
     } else {

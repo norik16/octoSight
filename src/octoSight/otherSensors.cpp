@@ -4,11 +4,7 @@
 
 #include "otherSensors.h"
 
-bool line0;
-bool line1;
-bool line2;
-bool line3;
-bool line4;
+bool line[5];
 
 void initSensors()
 {
@@ -26,15 +22,15 @@ void runSensors()
 
 void printSensors()
 {
-  Serial.print(line0);
+  Serial.print(line[0]);
   Serial.print(" ");
-  Serial.print(line1);
+  Serial.print(line[1]);
   Serial.print(" ");
-  Serial.print(line2);
+  Serial.print(line[2]);
   Serial.print(" ");
-  Serial.print(line3);
+  Serial.print(line[3]);
   Serial.print(" ");
-  Serial.print(line4);
+  Serial.print(line[4]);
   Serial.println();
 }
 

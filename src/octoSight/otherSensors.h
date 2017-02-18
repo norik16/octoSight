@@ -9,11 +9,7 @@
 
 #include "config.h"
 
-extern bool line0;
-extern bool line1;
-extern bool line2;
-extern bool line3;
-extern bool line4;
+extern bool line[];
 
 void initSensors();
 void runSensors();
