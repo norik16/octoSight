@@ -2,10 +2,8 @@
 // Created by ronald on 17.2.17.
 //
 
-#include "main.h"
+#include "octoSight.h"
 #include "config.h"
-#include "otherSensors.h"
-#include "ultraSensors.h"
 
 #include "otherSensors.h"
 #include "ultraSensors.h"
@@ -63,20 +61,24 @@ void go(int l, int angle)
 
     if (l) {
         l = abs(l);
+        int rBaseDelay;
+        int lBaseDelay;
+        int right;
+        int left;
 
         if (angle > 0) {
-            int right = l * stepsPerCm;
-            int left = right * (1 - (2*d*pi*angle)/right);
+            right = l * stepsPerCm;
+            left = right * (1 - (2*d*pi*angle)/right);
 
-            int rBaseDelay = mDelay;
-            int lBaseDelay = mDelay * (right/left);
+            rBaseDelay = mDelay;
+            lBaseDelay = mDelay * (right/left);
 
         } else {
-            int left = l * stepsPerCm;
-            int right = left * (1 - (2*d*pi*abs(angle))/left);
+            left = l * stepsPerCm;
+            right = left * (1 - (2*d*pi*abs(angle))/left);
 
-            int rBaseDelay = mDelay * (left/right);
-            int lBaseDelay = mDelay;
+            rBaseDelay = mDelay * (left/right);
+            lBaseDelay = mDelay;
         }
 
         int rDelay = rBaseDelay;
@@ -86,7 +88,7 @@ void go(int l, int angle)
         bool lHigh = 1;
 
         while (left and right) {
-            actDelay = min(rDelay, lDelay);
+            int actDelay = min(rDelay, lDelay);
             rDelay -= actDelay;
             lDelay -= actDelay;
 
@@ -121,18 +123,15 @@ void go(int l, int angle)
     }
 }
 
+void go(int l)
+{
+    go(l, 0);
+}
+
 void loop()
 {
-  // read the sensor value:
-  int sensorReading = analogRead(A0);
-  // map it to a range from 0 to 100:
-  int motorSpeed = map(sensorReading, 0, 1023, 0, 100);
-  // set the motor speed:
-  if (motorSpeed > 0) {
-    myStepper.setSpeed(motorSpeed);
-    // step 1/100 of a revolution:
-    myStepper.step(stepsPerRevolution/100);
-  } 
+
+
 }
 
 
