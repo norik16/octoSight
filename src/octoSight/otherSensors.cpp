@@ -19,6 +19,18 @@ void runSensors()
   line[2] = digitalRead(line2Pin);
   line[3] = digitalRead(line3Pin);
   line[4] = digitalRead(line4Pin);
+
+  flame[0] = analogRead(IR0Pin);
+  flame[1] = analogRead(IR1Pin);
+  flame[2] = analogRead(IR2Pin);
+  flame[3] = analogRead(IR3Pin);
+  flame[4] = analogRead(IR4Pin);
+
+  for(int i = 0; i < 5; i++)
+  {
+    flame[i] = flameLimit - flame[i];
+    if(flame[i] < 0) flame[i] = 0;
+  }
 }
 
 void printSensors()

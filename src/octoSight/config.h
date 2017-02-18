@@ -15,6 +15,7 @@ const int pi = 3.141592;
 const int mDelay = 2000;
 const int lineBaseDelay = 100000;
 
+const int flameLimit = 800; //0(FIRE)-1024(DARKNESSS)
 
 //output
 
@@ -31,11 +32,11 @@ const int lineBaseDelay = 100000;
 //input analog
 
 //IR candle from right to left
-#define IR0Pin 1
-#define IR1Pin 1
-#define IR2Pin 1
-#define IR3Pin 1
-#define IR4Pin 1
+#define IR0Pin A0
+#define IR1Pin A1
+#define IR2Pin A2
+#define IR3Pin A3
+#define IR4Pin A4
 
 
 //input digital
