@@ -1,6 +1,3 @@
-//
-// Created by ronald on 17.2.17.
-//
 
 #include <math.h>
 //#include <arduino.h>
@@ -137,13 +134,13 @@ void go(int l, int angle)
             lHigh = !lHigh;
         }
 
-        if (lineDelay <= 0) {
+        /*if (lineDelay <= 0) {
             runSensors();
             if (line[0] or line[1] or line[2] or line[3] or line[4]) metLine();
             if (flame[0] or flame[1] or flame[2] or flame[3] or flame[4]) solveCandle();
 
             lineDelay = lineBaseDelay;
-        }
+        }*/
 
         delayMicroseconds(actDelay);
     }
@@ -159,8 +156,7 @@ void loop()
   //runSensors();
   //printSensors();
 
-  go(50);
+  go(0,20);
   delay(5000);
 }
-
 
