@@ -1,3 +1,6 @@
+//
+// Created by ronald on 17.2.17.
+//
 
 #include <math.h>
 //#include <arduino.h>
@@ -77,14 +80,14 @@ void go(int l, int angle)
 
         if (angle > 0) {
             right = l * stepsPerCm;
-            left = right * (1 - (2*d*pi*angle)/right);
+            left = right * (1 - (d*M_PI*angle)/(right*180));
 
             rBaseDelay = mDelay;
             lBaseDelay = (int) (mDelay * (right/left));
 
         } else {
             left = l * stepsPerCm;
-            right = left * (1 - (2*d*pi*abs(angle))/left);
+            right = left * (1 - (d*M_PI*angle)/(left*180));
 
             rBaseDelay = (int) (mDelay * (left/right));
             lBaseDelay = mDelay;
@@ -99,8 +102,11 @@ void go(int l, int angle)
         angle > 0 ? digitalWrite(rightDirPin, HIGH) : digitalWrite(rightDirPin, LOW);
         angle > 0 ? digitalWrite(leftDirPin, LOW) : digitalWrite(leftDirPin, HIGH);
 
-        rBaseDelay = 2*pi*d*abs(angle)*stepsPerCm;
-        lBaseDelay = right;
+        right = M_PI*d*abs(angle)*stepsPerCm/180;
+        left = rBaseDelay;
+
+        rBaseDelay = mDelay;
+        lBaseDelay = mDelay;
     }
 
     rDelay = rBaseDelay;
