@@ -7,4 +7,10 @@
 
 #include "arduino.h"
 
+extern int US0dis;
+extern int US1dis;
+
+void initUltra();
+void runUltra();
+
 #endif //OCTOSIGHT_UTRASENSORS_H
