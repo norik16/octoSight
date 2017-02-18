@@ -51,6 +51,9 @@ void solveCandle()
     go(0, angle);
 
     bool foundLine = 0;
+    
+    int rBaseDelay = mDelay;
+    int lBaseDelay = mDelay;
 
     int rDelay = mDelay;
     int lDelay = mDelay;
@@ -72,7 +75,6 @@ void solveCandle()
                 digitalWrite(rightStepPin, HIGH);
             } else {
                 digitalWrite(rightStepPin, LOW);
-                right--;
             }
             rDelay = rBaseDelay;
             rHigh = !rHigh;
@@ -83,7 +85,6 @@ void solveCandle()
                 digitalWrite(leftStepPin, HIGH);
             } else {
                 digitalWrite(leftStepPin, LOW);
-                left--;
             }
             lDelay = lBaseDelay;
             lHigh = !lHigh;
