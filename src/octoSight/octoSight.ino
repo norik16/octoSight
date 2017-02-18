@@ -80,14 +80,14 @@ void go(int l, int angle)
 
         if (angle > 0) {
             right = l * stepsPerCm;
-            left = right * (1 - (2*d*pi*angle)/right);
+            left = right * (1 - (d*M_PI*angle)/(right*180));
 
             rBaseDelay = mDelay;
             lBaseDelay = (int) (mDelay * (right/left));
 
         } else {
             left = l * stepsPerCm;
-            right = left * (1 - (2*d*pi*abs(angle))/left);
+            right = left * (1 - (d*M_PI*angle)/(left*180));
 
             rBaseDelay = (int) (mDelay * (left/right));
             lBaseDelay = mDelay;
@@ -102,8 +102,11 @@ void go(int l, int angle)
         angle > 0 ? digitalWrite(rightDirPin, HIGH) : digitalWrite(rightDirPin, LOW);
         angle > 0 ? digitalWrite(leftDirPin, LOW) : digitalWrite(leftDirPin, HIGH);
 
-        rBaseDelay = 2*pi*d*abs(angle)*stepsPerCm;
-        lBaseDelay = right;
+        right = M_PI*d*abs(angle)*stepsPerCm/180;
+        left = rBaseDelay;
+
+        rBaseDelay = mDelay;
+        lBaseDelay = mDelay;
     }
 
     rDelay = rBaseDelay;
@@ -137,13 +140,13 @@ void go(int l, int angle)
             lHigh = !lHigh;
         }
 
-        if (lineDelay <= 0) {
+        /*if (lineDelay <= 0) {
             runSensors();
             if (line[0] or line[1] or line[2] or line[3] or line[4]) metLine();
             if (flame[0] or flame[1] or flame[2] or flame[3] or flame[4]) solveCandle();
 
             lineDelay = lineBaseDelay;
-        }
+        }*/
 
         delayMicroseconds(actDelay);
     }
@@ -159,8 +162,7 @@ void loop()
   //runSensors();
   //printSensors();
 
-  go(50);
+  go(0,20);
   delay(5000);
 }
-
 
