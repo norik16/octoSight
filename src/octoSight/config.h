@@ -15,6 +15,9 @@ const int pi = 3.141592;
 const int mDelay = 3000;
 const int lineBaseDelay = 100000;
 
+//TODO: constant to try
+const float wheelRatio = 1.2;
+
 const int flameLimit = 800; //0(FIRE)-1024(DARKNESSS)
 
 //output
@@ -42,10 +45,10 @@ const int flameLimit = 800; //0(FIRE)-1024(DARKNESSS)
 //input digital
 
 //ultra sound from
-#define US0inPin 1
-#define US0outPin 1
 #define US1inPin 1
 #define US1outPin 1
+#define US2inPin 1
+#define US2outPin 1
 
 //IR line from right to left
 #define line0Pin 1
