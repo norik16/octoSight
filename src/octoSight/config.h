@@ -9,7 +9,8 @@
 
 //constants
 const float stepsPerCm = 6.4;
-const int d = 30; //wheel to wheel
+const int d = 18.5; //wheel to wheel
+const int angleConst = 30; //turning constant
 const int pi = 3.141592;
 
 const int mDelay = 3000;
@@ -20,10 +21,10 @@ const int flameLimit = 800; //0(FIRE)-1024(DARKNESSS)
 //output
 
 //wheels
-#define leftDirPin 50
-#define leftStepPin 51
-#define rightDirPin 52
-#define rightStepPin 53
+#define leftDirPin 52
+#define leftStepPin 53
+#define rightDirPin 50
+#define rightStepPin 51
 
 //fan
 #define fanPin 1

@@ -79,15 +79,15 @@ void go(int l, int angle)
         l = abs(l);
 
         if (angle > 0) {
-            right = l * stepsPerCm;
-            left = right * (1 - (d*M_PI*angle)/(right*180));
+            right = l * stepsPerCm;  //
+            left = right - d*M_PI*angle/180;
 
             rBaseDelay = mDelay;
             lBaseDelay = (int) (mDelay * (right/left));
 
         } else {
             left = l * stepsPerCm;
-            right = left * (1 - (d*M_PI*angle)/(left*180));
+            right = left - d*M_PI*abs(angle)/180;
 
             rBaseDelay = (int) (mDelay * (left/right));
             lBaseDelay = mDelay;
@@ -175,7 +175,7 @@ void loop()
   //runSensors();
   //printSensors();
 
-  go(0,20);
+  go(30,359);
   delay(5000);
 }
 
