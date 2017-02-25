@@ -9,13 +9,13 @@
 
 #include "config.h"
 
-extern int US0dis;
 extern int US1dis;
+extern int US2dis;
 
 void initUltra();
-void US0high();
-void US0low();
 void US1high();
 void US1low();
+void US2high();
+void US2low();
 
 #endif //OCTOSIGHT_UTRASENSORS_H

@@ -4,22 +4,20 @@
 
 #include "ultraSensors.h"
 
-int US0dis;
-int US1dis;
+//from left to right
+int USdis[4];
 
-int US0time;
+int US1dis;
+int US2dis;
+
 int US1time;
+int US2time;
 
 void initUltra()
 {
-  attachInterrupt(digitalPinToInterrupt(US0inPin), US0high, RISING);
   attachInterrupt(digitalPinToInterrupt(US1inPin), US1high, RISING);
-  attachInterrupt(digitalPinToInterrupt(US1inPin), US0low, RISING);
-}
-
-void US0high()
-{
-  US0time = micros();
+  attachInterrupt(digitalPinToInterrupt(US2inPin), US2high, RISING);
+  attachInterrupt(digitalPinToInterrupt(US2inPin), US1low, RISING);
 }
 
 void US1high()
@@ -27,20 +25,25 @@ void US1high()
   US1time = micros();
 }
 
-void US0low()
+void US2high()
 {
-  US0dis = (micros() - US0time) / 58;
-  digitalWrite(US0outPin, HIGH);
-  delayMicroseconds(10);
-  digitalWrite(US0outPin, LOW);
+  US2time = micros();
 }
 
 void US1low()
 {
-  US1dis = (micros() - US1time) / 58;
+  USdis[1] = (micros() - US1time) / 58;
   digitalWrite(US1outPin, HIGH);
   delayMicroseconds(10);
   digitalWrite(US1outPin, LOW);
+}
+
+void US2low()
+{
+  USdis[2] = (micros() - US2time) / 58;
+  digitalWrite(US2outPin, HIGH);
+  delayMicroseconds(10);
+  digitalWrite(US2outPin, LOW);
 }
 
 
