@@ -7,10 +7,6 @@
 
 #include "octoSight.h"
 
-bool line[];
-bool flame[];
-int USdis[];
-
 void setup()
 {
     //set pins as output
@@ -36,10 +32,10 @@ void setup()
     //input digital
     
     //ultra sound from
-    pinMode(US0inPin, INPUT);
-    pinMode(US0outPin, INPUT);
     pinMode(US1inPin, INPUT);
     pinMode(US1outPin, INPUT);
+    pinMode(US2inPin, INPUT);
+    pinMode(US2outPin, INPUT);
     
     //IR line from right to left
     pinMode(line0Pin, INPUT);
@@ -150,9 +146,9 @@ void go(int l, int angle)
 
         if (lineDelay <= 0) {
             runSensors();
-            if (line[0] or line[1] or line[2] or line[3] or line[4]) metLine();
+/*            if (line[0] or line[1] or line[2] or line[3] or line[4]) metLine();
             if (flame[0] or flame[1] or flame[2] or flame[3] or flame[4]) solveCandle();
-            if (USdis[1] < 110 or USdis[2] < 110) metWall();
+            if (USdis[1] < 110 or USdis[2] < 110) metWall();*/
 
             lineDelay = lineBaseDelay;
         }
@@ -168,10 +164,10 @@ void go(int l)
 
 void loop()
 {
-  //runSensors();
-  //printSensors();
+  runSensors();
+  printSensors();
 
-  go(0, 20);
-  delay(5000);
+//  go(0, 20);
+//  delay(5000);
 }
 

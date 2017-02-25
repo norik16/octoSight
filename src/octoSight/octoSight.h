@@ -10,10 +10,6 @@
 #include "ultraSensors.h"
 #include "states.h"
 
-extern bool line[];
-extern bool flame[];
-extern int USdis[];
-
 //l in cm (possitive forward), angle in degrees (mathematical direction)
 void go(int l, int angle);
 

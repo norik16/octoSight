@@ -7,32 +7,51 @@
 //from left to right
 int USdis[4];
 
-int US1dis;
-int US2dis;
-
-int US1time;
-int US2time;
+int UStime[4];
 
 void initUltra()
 {
+  attachInterrupt(digitalPinToInterrupt(US0inPin), US0high, RISING);
+  attachInterrupt(digitalPinToInterrupt(US0inPin), US0low, FALLING);
   attachInterrupt(digitalPinToInterrupt(US1inPin), US1high, RISING);
+  attachInterrupt(digitalPinToInterrupt(US1inPin), US1low, FALLING);
   attachInterrupt(digitalPinToInterrupt(US2inPin), US2high, RISING);
-  attachInterrupt(digitalPinToInterrupt(US2inPin), US1low, RISING);
+  attachInterrupt(digitalPinToInterrupt(US2inPin), US2low, FALLING);
+  attachInterrupt(digitalPinToInterrupt(US3inPin), US3high, RISING);
+  attachInterrupt(digitalPinToInterrupt(US3inPin), US3low, FALLING);
+}
+
+void US0high()
+{
+  UStime[0] = micros();
 }
 
 void US1high()
 {
-  US1time = micros();
+  UStime[1] = micros();
 }
 
 void US2high()
 {
-  US2time = micros();
+  UStime[2] = micros();
+}
+
+void US3high()
+{
+  UStime[3] = micros();
+}
+
+void US0low()
+{
+  USdis[0] = (micros() - UStime[0]) / 58;
+  digitalWrite(US0outPin, HIGH);
+  delayMicroseconds(10);
+  digitalWrite(US0outPin, LOW);
 }
 
 void US1low()
 {
-  USdis[1] = (micros() - US1time) / 58;
+  USdis[1] = (micros() - UStime[1]) / 58;
   digitalWrite(US1outPin, HIGH);
   delayMicroseconds(10);
   digitalWrite(US1outPin, LOW);
@@ -40,10 +59,16 @@ void US1low()
 
 void US2low()
 {
-  USdis[2] = (micros() - US2time) / 58;
+  USdis[2] = (micros() - UStime[2]) / 58;
   digitalWrite(US2outPin, HIGH);
   delayMicroseconds(10);
   digitalWrite(US2outPin, LOW);
 }
 
-
+void US3low()
+{
+  USdis[3] = (micros() - UStime[3]) / 58;
+  digitalWrite(US3outPin, HIGH);
+  delayMicroseconds(10);
+  digitalWrite(US3outPin, LOW);
+}

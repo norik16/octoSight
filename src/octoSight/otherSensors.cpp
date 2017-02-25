@@ -4,8 +4,9 @@
 
 #include "otherSensors.h"
 
-bool line[5];
-bool flame[5];
+int line[5];
+int flame[5];
+bool bmp[2];
 
 void initSensors()
 {
@@ -14,11 +15,14 @@ void initSensors()
 
 void runSensors()
 {
-  line[0] = digitalRead(line0Pin);
-  line[1] = digitalRead(line1Pin);
-  line[2] = digitalRead(line2Pin);
-  line[3] = digitalRead(line3Pin);
-  line[4] = digitalRead(line4Pin);
+  bmp[0] = digitalRead(bmp0Pin);
+  bmp[1] = digitalRead(bmp1Pin);
+  
+  line[0] = analogRead(line0Pin);
+  line[1] = analogRead(line1Pin);
+  line[2] = analogRead(line2Pin);
+  line[3] = analogRead(line3Pin);
+  line[4] = analogRead(line4Pin);
 
   flame[0] = analogRead(IR0Pin);
   flame[1] = analogRead(IR1Pin);
@@ -35,6 +39,7 @@ void runSensors()
 
 void printSensors()
 {
+  Serial.print("Line: ");
   Serial.print(line[0]);
   Serial.print(" ");
   Serial.print(line[1]);
@@ -44,6 +49,29 @@ void printSensors()
   Serial.print(line[3]);
   Serial.print(" ");
   Serial.print(line[4]);
+  Serial.print(" Flame: ");
+  Serial.print(flame[0]);
+  Serial.print(" ");
+  Serial.print(flame[1]);
+  Serial.print(" ");
+  Serial.print(flame[2]);
+  Serial.print(" ");
+  Serial.print(flame[3]);
+  Serial.print(" ");
+  Serial.print(flame[4]);
+  Serial.print(" Distance: ");
+  Serial.print(USdis[0]);
+  Serial.print(" ");
+  Serial.print(USdis[1]);
+  Serial.print(" ");
+  Serial.print(USdis[2]);
+  Serial.print(" ");
+  Serial.print(USdis[3]);
+  Serial.print(" Bumper: ");
+  Serial.print(bmp[0]);
+  Serial.print(" ");
+  Serial.print(bmp[1]);
+  Serial.print(" ");
   Serial.println();
 }
 

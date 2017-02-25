@@ -4,11 +4,9 @@
 
 #include "math.h"
 #include "states.h"
-
-bool line[];
-bool flame[];
-int USdis[];
-float wheelRation;
+/*
+int * USdis;
+float wheelRatio;
 
 int corners = 0;
 
@@ -308,4 +306,4 @@ void metWall()
     }
 
     go(360);
-}
+}*/

@@ -12,10 +12,8 @@
 #include "otherSensors.h"
 #include "ultraSensors.h"
 #include "config.h"
-
-extern bool line[];
-extern bool flame[];
-extern int USdis[];
+/*
+extern int * USdis;
 extern float wheelRatio;
 
 void goAlongLine();
@@ -25,6 +23,6 @@ void findCandle();
 void solveCandle();
 
 void metWall();
-
+*/
 
 #endif //MAIN_STATES_H
