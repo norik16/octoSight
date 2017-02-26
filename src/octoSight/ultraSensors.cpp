@@ -8,6 +8,7 @@ int US[8];
 
 //from left to right
 int USdis[4];
+int USdisx[4][USmedian];
 bool UShigh[4];
 
 unsigned long UStime[4];
@@ -20,22 +21,47 @@ void initUltra()
   attachInterrupt(digitalPinToInterrupt(US3inPin), US3, CHANGE);
   for (int i = 0; i < 8; i++) US[i] = 0;
   for (int i = 0; i < 4; i++) UShigh[i] = 1;
-  US0();
-  US1();
-  US2();
-  US3();
+  for (int i = 0; i < 4; i++) UStime[i] = 0;
   for (int i = 0; i < 4; i++) USdis[i] = 10000;
+  for (int i = 0; i < 4 * USmedian; i++) USdisx[i%4][i/4] = 10000;
+}
+
+void runUltra()
+{
+  if(!UShigh[0] && micros() - UStime[0] > USwait)
+  {
+    UShigh[0] = 1;
+    US0();
+  }
+  if(!UShigh[1] && micros() - UStime[1] > USwait)
+  {
+    UShigh[1] = 1;
+    US1();
+  }
+  if(!UShigh[2] && micros() - UStime[2] > USwait)
+  {
+    UShigh[2] = 1;
+    US2();
+  }
+  if(!UShigh[3] && micros() - UStime[3] > USwait)
+  {
+    UShigh[3] = 1;
+    US3();
+  }
 }
 
 void US0()
 {
   if (UShigh[0])
   {
-    USdis[0] = (micros() - UStime[0]) / 58;
+    for(int i = 1; i < USmedian; i++) USdisx[0][i-1] = USdisx[0][i];
+    USdisx[0][USmedian-1] = (micros() - UStime[0]) / UStocm;
+    USdis[0] = median(USdisx[0], USmedian);
     digitalWrite(US0outPin, HIGH);
     delayMicroseconds(10);
     digitalWrite(US0outPin, LOW);
     US[4]++;
+    UStime[0] = micros();
   }
   else
   {
@@ -49,11 +75,12 @@ void US1()
 {
   if (UShigh[1])
   {
-    USdis[1] = (micros() - UStime[1]) / 58;
+    USdis[1] = (micros() - UStime[1]) / UStocm;
     digitalWrite(US1outPin, HIGH);
     delayMicroseconds(10);
     digitalWrite(US1outPin, LOW);
     US[5]++;
+    UStime[1] = micros();
   }
   else
   {
@@ -67,11 +94,12 @@ void US2()
 {
   if (UShigh[2])
   {
-    USdis[2] = (micros() - UStime[2]) / 58;
+    USdis[2] = (micros() - UStime[2]) / UStocm;
     digitalWrite(US1outPin, HIGH);
     delayMicroseconds(10);
     digitalWrite(US1outPin, LOW);
     US[6]++;
+    UStime[2] = micros();
   }
   else
   {
@@ -85,11 +113,12 @@ void US3()
 {
   if (UShigh[3])
   {
-    USdis[3] = (micros() - UStime[3]) / 58;
+    USdis[3] = (micros() - UStime[3]) / UStocm;
     digitalWrite(US3outPin, HIGH);
     delayMicroseconds(10);
     digitalWrite(US3outPin, LOW);
     US[7]++;
+    UStime[3] = micros();
   }
   else
   {

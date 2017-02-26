@@ -35,31 +35,32 @@ void runSensors()
     flame[i] = flameLimit - flame[i];
     if(flame[i] < 0) flame[i] = 0;
   }
+  runUltra();
 }
 
 void printSensors()
 {
-  /*Serial.print("Line: ");
+  Serial.print("Line:\t");
   Serial.print(line[0]);
-  Serial.print(" ");
+  Serial.print("\t");
   Serial.print(line[1]);
-  Serial.print(" ");
+  Serial.print("\t");
   Serial.print(line[2]);
-  Serial.print(" ");
+  Serial.print("\t");
   Serial.print(line[3]);
-  Serial.print(" ");
+  Serial.print("\t");
   Serial.print(line[4]);
-  Serial.print(" Flame: ");
+  Serial.print("\tFlame:\t");
   Serial.print(flame[0]);
-  Serial.print(" ");
+  Serial.print("\t");
   Serial.print(flame[1]);
-  Serial.print(" ");
+  Serial.print("\t");
   Serial.print(flame[2]);
-  Serial.print(" ");
+  Serial.print("\t");
   Serial.print(flame[3]);
-  Serial.print(" ");
-  Serial.print(flame[4]);*/
-  Serial.print(" Distance:\t");
+  Serial.print("\t");
+  Serial.print(flame[4]);
+  Serial.print("\tDistance:\t");
   Serial.print(USdis[0]);
   Serial.print("\t");
   Serial.print(USdis[1]);
@@ -80,30 +81,5 @@ void printSensors()
   Serial.print(" ");
   Serial.print(bmp[1]);
   Serial.print(" ");
-  Serial.print(" US: ");
-  Serial.print(US[0]);
-  Serial.print(" ");
-  Serial.print(US[1]);
-  Serial.print(" ");
-  Serial.print(US[2]);
-  Serial.print(" ");
-  Serial.print(US[3]);
-  Serial.print(" ");
-  Serial.print(US[4]);
-  Serial.print(" ");
-  Serial.print(US[5]);
-  Serial.print(" ");
-  Serial.print(US[6]);
-  Serial.print(" ");
-  Serial.print(US[7]);
-  Serial.print(" ");
-  Serial.print(digitalRead(US0inPin));
-  Serial.print(" ");
-  Serial.print(digitalRead(US1inPin));
-  Serial.print(" ");
-  Serial.print(digitalRead(US2inPin));
-  Serial.print(" ");
-  Serial.print(digitalRead(US3inPin));
-  Serial.println();
 }
 

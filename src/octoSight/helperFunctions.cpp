@@ -22,3 +22,21 @@ float angleToLine(int a, int b)
     return asin(k/sqrt(pow(k, 2) - pow(lineC[a].x - lineC[b].x, 2)))*180/M_PI;
 }
 
+int median(int * field, int len)
+{
+  int h, x = len/2;
+  while(len--)
+  {
+    for(int j = 0; j < len-1; j++)
+    {
+      if(field[j] > field[j+1])
+      {
+        h = field[j];
+        field[j] = field[j+1];
+        field[j+1] = h;
+      }
+    }
+  }
+  return field[x];
+}
+
