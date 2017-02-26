@@ -33,9 +33,13 @@ void setup()
     
     //ultra sound from
     pinMode(US0inPin, INPUT);
-    pinMode(US0outPin, INPUT);
+    pinMode(US0outPin, OUTPUT);
     pinMode(US1inPin, INPUT);
-    pinMode(US1outPin, INPUT);
+    pinMode(US1outPin, OUTPUT);
+    pinMode(US2inPin, INPUT);
+    pinMode(US2outPin, OUTPUT);
+    pinMode(US3inPin, INPUT);
+    pinMode(US3outPin, OUTPUT);
     
     //IR line from right to left
     pinMode(line0Pin, INPUT);
@@ -103,14 +107,14 @@ void go(int l, int angle)
         rBaseDelay = mDelay;
         lBaseDelay = mDelay;
 
-        Serial.print(rDelay);
-        Serial.print(" ");
-        Serial.print(lDelay);
-        Serial.print(" ");
-        Serial.print(right);
-        Serial.print(" ");
-        Serial.print(left);
-        Serial.println(" ");
+//        Serial.print(rDelay);
+//        Serial.print(" ");
+//        Serial.print(lDelay);
+//        Serial.print(" ");
+//        Serial.print(right);
+//        Serial.print(" ");
+//        Serial.print(left);
+//        Serial.println(" ");
     }
 
     rDelay = rBaseDelay;
@@ -129,11 +133,6 @@ void go(int l, int angle)
                 digitalWrite(rightStepPin, LOW);
                 right--;
             }
-            
-/*        Serial.print(rHigh);
-        Serial.print(" ");
-        Serial.print(actDelay);
-        Serial.println(" ");*/
             rDelay = rBaseDelay;
             rHigh = !rHigh;
         }
@@ -145,21 +144,18 @@ void go(int l, int angle)
                 digitalWrite(leftStepPin, LOW);
                 left--;
             }
-/*        Serial.print(lHigh);
-        Serial.print(" ");
-        Serial.print(actDelay);
-        Serial.println(" ");*/
             lDelay = lBaseDelay;
             lHigh = !lHigh;
         }
 
-        /*if (lineDelay <= 0) {
+        if (lineDelay <= 0) {
             runSensors();
-            if (line[0] or line[1] or line[2] or line[3] or line[4]) metLine();
+/*            if (line[0] or line[1] or line[2] or line[3] or line[4]) metLine();
             if (flame[0] or flame[1] or flame[2] or flame[3] or flame[4]) solveCandle();
+            if (USdis[1] < 110 or USdis[2] < 110) metWall();*/
 
             lineDelay = lineBaseDelay;
-        }*/
+        }
 
         delayMicroseconds(actDelay);
     }
@@ -169,13 +165,26 @@ void go(int l)
 {
     go(l, 0);
 }
-
+//int time;
 void loop()
 {
-  //runSensors();
-  //printSensors();
+  runSensors();
+  printSensors();
+  /*if(millis() - time > 500 || millis() - time < 0)
+  {
+    digitalWrite(US0outPin, HIGH);
+    digitalWrite(US1outPin, HIGH);
+    digitalWrite(US2outPin, HIGH);
+    digitalWrite(US3outPin, HIGH);
+    delayMicroseconds(100);
+    digitalWrite(US0outPin, LOW);
+    digitalWrite(US1outPin, LOW);
+    digitalWrite(US2outPin, LOW);
+    digitalWrite(US3outPin, LOW);
+    time = millis();
+  }*/
 
-  go(30,359);
-  delay(5000);
+//  go(0, 20);
+//  delay(5000);
 }
 

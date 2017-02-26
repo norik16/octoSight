@@ -10,15 +10,19 @@
 #include "octoSight.h"
 #include "helperFunctions.h"
 #include "otherSensors.h"
+#include "ultraSensors.h"
+#include "config.h"
+/*
+extern int * USdis;
+extern float wheelRatio;
 
-extern bool line[];
-extern bool flame[];
-
-void goAmongLine();
+void goAlongLine();
 void metLine();
 
 void findCandle();
 void solveCandle();
 
+void metWall();
+*/
 
 #endif //MAIN_STATES_H

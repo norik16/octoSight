@@ -5,7 +5,7 @@
 #ifndef OCTOSIGHT_OTHERSENSORS_H
 #define OCTOSIGHT_OTHERSENSORS_H
 
-#include "arduino.h"
+#include "Arduino.h"
 
 #include "config.h"
 
@@ -13,8 +13,9 @@
 #include "ultraSensors.h"
 #include "states.h"
 
-extern bool line[];
-extern bool flame[];
+extern int line[5];
+extern int flame[5];
+extern bool bmp[2];
 
 void initSensors();
 void runSensors();

@@ -5,17 +5,18 @@
 #ifndef OCTOSIGHT_UTRASENSORS_H
 #define OCTOSIGHT_UTRASENSORS_H
 
-#include "arduino.h"
+#include "Arduino.h"
 
 #include "config.h"
 
-extern int US0dis;
-extern int US1dis;
+extern int USdis[4];
+extern unsigned long UStime[4];
+extern int US[8];
 
 void initUltra();
-void US0high();
-void US0low();
-void US1high();
-void US1low();
+void US0();
+void US1();
+void US2();
+void US3();
 
 #endif //OCTOSIGHT_UTRASENSORS_H
