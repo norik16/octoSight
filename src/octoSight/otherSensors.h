@@ -12,6 +12,7 @@
 #include "otherSensors.h"
 #include "ultraSensors.h"
 #include "states.h"
+#include "helperFunctions.h"
 
 extern int line[5];
 extern int flame[5];
