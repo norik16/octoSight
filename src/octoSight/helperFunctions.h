@@ -8,6 +8,7 @@
 #include "math.h"
 
 float angleToLine(int a, int b);
-int median(int * field, int len);
+
+int median(int *field, int len);
 
 #endif //MAIN_HELPERFUNCTIONS_H

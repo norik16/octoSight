@@ -18,7 +18,9 @@ extern int flame[5];
 extern bool bmp[2];
 
 void initSensors();
+
 void runSensors();
+
 void printSensors();
 
 #endif //OCTOSIGHT_OTHERSENSORS_H

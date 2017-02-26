@@ -3,35 +3,34 @@
 //
 
 #include <math.h>
-//#include <arduino.h>
+//#include <Arduino.h>
 
 
 #include "octoSight.h"
 
-void setup()
-{
+void setup() {
     //set pins as output
-    
+
     //wheels
     pinMode(leftDirPin, OUTPUT);
     pinMode(leftStepPin, OUTPUT);
     pinMode(rightDirPin, OUTPUT);
     pinMode(rightStepPin, OUTPUT);
-    
+
     //fan
     pinMode(fanPin, OUTPUT);
-    
-    
+
+
     //input analog
-    
+
     //IR candle from right to left
     pinMode(IR0Pin, INPUT);
     pinMode(IR1Pin, INPUT);
     pinMode(IR2Pin, INPUT);
-    
-    
+
+
     //input digital
-    
+
     //ultra sound from
     pinMode(US0inPin, INPUT);
     pinMode(US0outPin, OUTPUT);
@@ -41,18 +40,18 @@ void setup()
     pinMode(US2outPin, OUTPUT);
     pinMode(US3inPin, INPUT);
     pinMode(US3outPin, OUTPUT);
-    
+
     //IR line from right to left
     pinMode(line0Pin, INPUT);
     pinMode(line1Pin, INPUT);
     pinMode(line2Pin, INPUT);
     pinMode(line3Pin, INPUT);
     pinMode(line4Pin, INPUT);
-    
+
     //bumper from right to left
     pinMode(bmp0Pin, INPUT);
     pinMode(bmp1Pin, INPUT);
-    
+
     //switch
     pinMode(powerPin, INPUT);
 
@@ -62,8 +61,7 @@ void setup()
     initUltra();
 }
 
-void go(int l, int angle)
-{
+void go(int l, int angle) {
     int rBaseDelay;
     int lBaseDelay;
     float right;
@@ -72,7 +70,7 @@ void go(int l, int angle)
     int rDelay;
     int lDelay;
 
-    int lineDelay = lineBaseDelay;
+    long lineDelay = lineBaseDelay;
 
     bool rHigh = 1;
     bool lHigh = 1;
@@ -85,16 +83,16 @@ void go(int l, int angle)
 
         if (angle > 0) {
             right = l * stepsPerCm;  //
-            left = right - d*M_PI*angle/180;
+            left = right - d * M_PI * angle / 180;
 
             rBaseDelay = mDelay;
-            lBaseDelay = (int) (mDelay * (right/left));
+            lBaseDelay = (int) (mDelay * (right / left));
 
         } else {
             left = l * stepsPerCm;
-            right = left - d*M_PI*abs(angle)/180;
+            right = left - d * M_PI * abs(angle) / 180;
 
-            rBaseDelay = (int) (mDelay * (left/right));
+            rBaseDelay = (int) (mDelay * (left / right));
             lBaseDelay = mDelay;
         }
 
@@ -102,7 +100,7 @@ void go(int l, int angle)
         angle > 0 ? digitalWrite(rightDirPin, HIGH) : digitalWrite(rightDirPin, LOW);
         angle > 0 ? digitalWrite(leftDirPin, LOW) : digitalWrite(leftDirPin, HIGH);
 
-        right = M_PI*d*abs(angle)*stepsPerCm/180;
+        right = M_PI * d * abs(angle) * stepsPerCm / 180;
         left = right;
 
         rBaseDelay = mDelay;
@@ -151,9 +149,9 @@ void go(int l, int angle)
 
         if (lineDelay <= 0) {
             runSensors();
-/*            if (line[0] or line[1] or line[2] or line[3] or line[4]) metLine();
+            if (line[0] or line[1] or line[2] or line[3] or line[4]) metLine();
             if (flame[0] or flame[1] or flame[2] or flame[3] or flame[4]) solveCandle();
-            if (USdis[1] < 110 or USdis[2] < 110) metWall();*/
+            if (USdis[1] < 110 or USdis[2] < 110) metWall();
 
             lineDelay = lineBaseDelay;
         }
@@ -162,30 +160,29 @@ void go(int l, int angle)
     }
 }
 
-void go(int l)
-{
+void go(int l) {
     go(l, 0);
 }
-//int time;
-void loop()
-{
-  runSensors();
-  printSensors();
-  /*if(millis() - time > 500 || millis() - time < 0)
-  {
-    digitalWrite(US0outPin, HIGH);
-    digitalWrite(US1outPin, HIGH);
-    digitalWrite(US2outPin, HIGH);
-    digitalWrite(US3outPin, HIGH);
-    delayMicroseconds(100);
-    digitalWrite(US0outPin, LOW);
-    digitalWrite(US1outPin, LOW);
-    digitalWrite(US2outPin, LOW);
-    digitalWrite(US3outPin, LOW);
-    time = millis();
-  }*/
 
-//  go(0, 20);
-//  delay(5000);
+//int time;
+void loop() {
+    runSensors();
+    printSensors();
+    /*if(millis() - time > 500 || millis() - time < 0)
+    {
+      digitalWrite(US0outPin, HIGH);
+      digitalWrite(US1outPin, HIGH);
+      digitalWrite(US2outPin, HIGH);
+      digitalWrite(US3outPin, HIGH);
+      delayMicroseconds(100);
+      digitalWrite(US0outPin, LOW);
+      digitalWrite(US1outPin, LOW);
+      digitalWrite(US2outPin, LOW);
+      digitalWrite(US3outPin, LOW);
+      time = millis();
+    }*/
+
+  go(0, 20);
+  delay(5000);
 }
 

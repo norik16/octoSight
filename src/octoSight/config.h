@@ -5,7 +5,7 @@
 #ifndef OCTOSIGHT_CONFIG_H
 #define OCTOSIGHT_CONFIG_H
 
-
+//#include "Arduino.h"
 
 //constants
 const float stepsPerCm = 6.4;
@@ -14,10 +14,10 @@ const int angleConst = 30; //turning constant
 const int pi = 3.141592;
 
 const int mDelay = 3000;
-const int lineBaseDelay = 100000;
+const long int lineBaseDelay = 100000;
 
 //TODO: constant to try
-const float wheelRatiox = 1.2;
+const float wheelRatio = 1.2;
 
 const int flameLimit = 800; //0(FIRE)-1024(DARKNESSS)
 
@@ -71,7 +71,8 @@ const int flameLimit = 800; //0(FIRE)-1024(DARKNESSS)
 
 //ultra sound config
 #define UStocm 57
-#define USwait 5800 //micros to wait for echo
-#define USmedian 3 //nomber of last values to make median of
+#define USwaitlow 58000 //micros to wait for echo
+#define USwaithigh 580000 //micros to wait for echo
+#define USmedian 7 //nomber of last values to make median of
 
 #endif //OCTOSIGHT_CONFIG_H

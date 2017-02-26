@@ -4,14 +4,11 @@
 
 #include "math.h"
 #include "states.h"
-/*
-int * USdis;
-float wheelRatio;
+
 
 int corners = 0;
 
-void goAlongLine()
-{
+void goAlongLine() {
     corners++;
     if (corners < 6) {
         go(0, 180);
@@ -23,13 +20,12 @@ void goAlongLine()
     go(360);
 }
 
-void metLine()
-{
+void metLine() {
     int pairs = 0;
     int angle = 0;
 
     for (int a = 0; a < 4; a++) {
-        for (int b = a+1; b < 5; b++) {
+        for (int b = a + 1; b < 5; b++) {
             if (line[a] and line[b]) {
                 angle = angleToLine(a, b);
                 pairs++;
@@ -37,20 +33,18 @@ void metLine()
         }
     }
 
-    angle = angle/pairs;
+    angle = angle / pairs;
 
     findCandle();
 }
 
-void findCandle()
-{
+void findCandle() {
     go(0, 360);
     goAlongLine();
 }
 
 //solves a Candle once it is in reach of the sensors
-void solveCandle()
-{
+void solveCandle() {
     int angle = 0;
     runSensors();
     if (flame[0] > 0) angle = -75;
@@ -69,7 +63,7 @@ void solveCandle()
     int rDelay = mDelay;
     int lDelay = mDelay;
 
-    int lineDelay = lineBaseDelay;
+    long lineDelay = lineBaseDelay;
 
     bool rHigh = 1;
     bool lHigh = 1;
@@ -134,8 +128,7 @@ void solveCandle()
     go(360);
 }
 
-void metWall()
-{
+void metWall() {
 
     /////////////////////////////////////////////////////////////////////////////////////
     // find angle to miss the obstacle
@@ -148,7 +141,7 @@ void metWall()
     bool rHigh = 1;
     bool lHigh = 1;
 
-    int lineDelay = lineBaseDelay;
+    long lineDelay = lineBaseDelay;
 
     while (foundWall) {
         int actDelay = mDelay;
@@ -158,9 +151,7 @@ void metWall()
             digitalWrite(rightStepPin, HIGH);
         } else {
             digitalWrite(rightStepPin, LOW);
-            right--;
         }
-        rDelay = rBaseDelay;
         rHigh = !rHigh;
 
 
@@ -168,9 +159,7 @@ void metWall()
             digitalWrite(leftStepPin, HIGH);
         } else {
             digitalWrite(leftStepPin, LOW);
-            left--;
         }
-        lDelay = lBaseDelay;
         lHigh = !lHigh;
 
 
@@ -200,7 +189,7 @@ void metWall()
     int rDelay = mDelay;
     int lDelay = mDelay;
 
-    int lineDelay = lineBaseDelay;
+    lineDelay = lineBaseDelay;
 
     rHigh = 1;
     lHigh = 1;
@@ -257,6 +246,8 @@ void metWall()
     rHigh = 1;
     lHigh = 1;
 
+    lineDelay = lineBaseDelay;
+
     digitalWrite(rightDirPin, HIGH);
     digitalWrite(leftDirPin, HIGH);
 
@@ -306,4 +297,4 @@ void metWall()
     }
 
     go(360);
-}*/
+}
