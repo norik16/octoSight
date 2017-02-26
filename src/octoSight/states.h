@@ -12,9 +12,6 @@
 #include "otherSensors.h"
 #include "ultraSensors.h"
 #include "config.h"
-/*
-extern int * USdis;
-extern float wheelRatio;
 
 void goAlongLine();
 void metLine();
@@ -23,6 +20,6 @@ void findCandle();
 void solveCandle();
 
 void metWall();
-*/
+
 
 #endif //MAIN_STATES_H

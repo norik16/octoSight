@@ -8,78 +8,74 @@ int line[5];
 int flame[5];
 bool bmp[2];
 
-void initSensors()
-{
-  
+void initSensors() {
+
 }
 
-void runSensors()
-{
-  bmp[0] = digitalRead(bmp0Pin);
-  bmp[1] = digitalRead(bmp1Pin);
-  
-  line[0] = analogRead(line0Pin);
-  line[1] = analogRead(line1Pin);
-  line[2] = analogRead(line2Pin);
-  line[3] = analogRead(line3Pin);
-  line[4] = analogRead(line4Pin);
+void runSensors() {
+    bmp[0] = digitalRead(bmp0Pin);
+    bmp[1] = digitalRead(bmp1Pin);
 
-  flame[0] = analogRead(IR0Pin);
-  flame[1] = analogRead(IR1Pin);
-  flame[2] = analogRead(IR2Pin);
-  flame[3] = analogRead(IR3Pin);
-  flame[4] = analogRead(IR4Pin);
+    line[0] = analogRead(line0Pin);
+    line[1] = analogRead(line1Pin);
+    line[2] = analogRead(line2Pin);
+    line[3] = analogRead(line3Pin);
+    line[4] = analogRead(line4Pin);
 
-  for(int i = 0; i < 5; i++)
-  {
-    flame[i] = flameLimit - flame[i];
-    if(flame[i] < 0) flame[i] = 0;
-  }
-  runUltra();
+    flame[0] = analogRead(IR0Pin);
+    flame[1] = analogRead(IR1Pin);
+    flame[2] = analogRead(IR2Pin);
+    flame[3] = analogRead(IR3Pin);
+    flame[4] = analogRead(IR4Pin);
+
+    for (int i = 0; i < 5; i++) {
+        flame[i] = flameLimit - flame[i];
+        if (flame[i] < 0) flame[i] = 0;
+    }
+    runUltra();
 }
 
-void printSensors()
-{
-  Serial.print("Line:\t");
-  Serial.print(line[0]);
-  Serial.print("\t");
-  Serial.print(line[1]);
-  Serial.print("\t");
-  Serial.print(line[2]);
-  Serial.print("\t");
-  Serial.print(line[3]);
-  Serial.print("\t");
-  Serial.print(line[4]);
-  Serial.print("\tFlame:\t");
-  Serial.print(flame[0]);
-  Serial.print("\t");
-  Serial.print(flame[1]);
-  Serial.print("\t");
-  Serial.print(flame[2]);
-  Serial.print("\t");
-  Serial.print(flame[3]);
-  Serial.print("\t");
-  Serial.print(flame[4]);
-  Serial.print("\tDistance:\t");
-  Serial.print(USdis[0]);
-  Serial.print("\t");
-  Serial.print(USdis[1]);
-  Serial.print("\t");
-  Serial.print(USdis[2]);
-  Serial.print("\t");
-  Serial.print(USdis[3]);
-  Serial.print(" UStime:\t");
-  Serial.print(UStime[0]);
-  Serial.print("\t");
-  Serial.print(UStime[1]);
-  Serial.print("\t");
-  Serial.print(UStime[2]);
-  Serial.print("\t");
-  Serial.print(UStime[3]);
-  Serial.print("\tBumper: ");
-  Serial.print(bmp[0]);
-  Serial.print(" ");
-  Serial.print(bmp[1]);
-  Serial.print(" ");
+void printSensors() {
+    Serial.print("Line:\t");
+    Serial.print(line[0]);
+    Serial.print("\t");
+    Serial.print(line[1]);
+    Serial.print("\t");
+    Serial.print(line[2]);
+    Serial.print("\t");
+    Serial.print(line[3]);
+    Serial.print("\t");
+    Serial.print(line[4]);
+    Serial.print("\tFlame:\t");
+    Serial.print(flame[0]);
+    Serial.print("\t");
+    Serial.print(flame[1]);
+    Serial.print("\t");
+    Serial.print(flame[2]);
+    Serial.print("\t");
+    Serial.print(flame[3]);
+    Serial.print("\t");
+    Serial.print(flame[4]);
+    Serial.print("\tDistance:\t");
+    Serial.print(USdis[0]);
+    Serial.print("\t");
+    Serial.print(USdis[1]);
+    Serial.print("\t");
+    Serial.print(USdis[2]);
+    Serial.print("\t");
+    Serial.print(USdis[3]);
+    Serial.print(" UStime:\t");
+    Serial.print(UStime[0]);
+    Serial.print("\t");
+    Serial.print(UStime[1]);
+    Serial.print("\t");
+    Serial.print(UStime[2]);
+    Serial.print("\t");
+    Serial.print(UStime[3]);
+    Serial.print("\tBumper: ");
+    Serial.print(bmp[0]);
+    Serial.print(" ");
+    Serial.print(bmp[1]);
+    Serial.print(" ");
 }
 
