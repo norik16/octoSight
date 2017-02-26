@@ -22,6 +22,10 @@ void initUltra()
   for (int i = 0; i < 8; i++) US[i] = 0;
   for (int i = 0; i < 4; i++) UShigh[i] = 1;
   for (int i = 0; i < 4; i++) UStime[i] = 0;
+  US0();
+  US1();
+  US2();
+  US3();
   for (int i = 0; i < 4; i++) USdis[i] = 10000;
   for (int i = 0; i < 4 * USmedian; i++) USdisx[i%4][i/4] = 10000;
 }

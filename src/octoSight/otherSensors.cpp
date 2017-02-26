@@ -35,7 +35,7 @@ void runSensors()
     flame[i] = flameLimit - flame[i];
     if(flame[i] < 0) flame[i] = 0;
   }
-  runUltra();
+  //runUltra();
 }
 
 void printSensors()
@@ -80,6 +80,6 @@ void printSensors()
   Serial.print(bmp[0]);
   Serial.print(" ");
   Serial.print(bmp[1]);
-  Serial.print(" ");
+  Serial.println();
 }
 
