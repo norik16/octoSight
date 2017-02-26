@@ -5,6 +5,10 @@
 #include "otherSensors.h"
 
 int line[5];
+int lineRaw[5];
+int lineMed[5][lineMedian];
+int lineLastMed = 0;
+
 int flame[5];
 bool bmp[2];
 
@@ -16,11 +20,11 @@ void runSensors() {
     bmp[0] = digitalRead(bmp0Pin);
     bmp[1] = digitalRead(bmp1Pin);
 
-    line[0] = analogRead(line0Pin);
-    line[1] = analogRead(line1Pin);
-    line[2] = analogRead(line2Pin);
-    line[3] = analogRead(line3Pin);
-    line[4] = analogRead(line4Pin);
+    lineRaw[0] = analogRead(line0Pin);
+    lineRaw[1] = analogRead(line1Pin);
+    lineRaw[2] = analogRead(line2Pin);
+    lineRaw[3] = analogRead(line3Pin);
+    lineRaw[4] = analogRead(line4Pin);
 
     flame[0] = analogRead(IR0Pin);
     flame[1] = analogRead(IR1Pin);
@@ -32,6 +36,14 @@ void runSensors() {
         flame[i] = flameLimit - flame[i];
         if (flame[i] < 0) flame[i] = 0;
     }
+
+    for (int i = 0; i < 5; i++) {
+        if (median(lineMed[i], sizeof(lineMed[i])/sizeof(lineMed[i][0])) < whiteThreshold and lineRaw[i] > blackThreshold)
+            line[i] = 1;
+        lineMed[i][lineLastMed] = lineRaw[i];
+        lineLastMed = (lineLastMed + 1) % sizeof(lineMed[i])/sizeof(lineMed[i][0]);
+    }
+
     runUltra();
 }
 

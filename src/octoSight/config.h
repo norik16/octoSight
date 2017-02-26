@@ -21,6 +21,19 @@ const float wheelRatio = 1.2;
 
 const int flameLimit = 800; //0(FIRE)-1024(DARKNESSS)
 
+//line detection config
+const int lineAvgLng = 6; //number of last values to make average of
+const int whiteThreshold = 100; //the lower, the whiter
+const int blackThreshold = 200; //the higher, the darker
+#define lineMedian 6 //number of last values to make median of
+
+
+//ultra sound config
+#define UStocm 57
+#define USwait 5800 //micros to wait for echo
+#define USmedian 3 //number of last values to make median of
+
+
 //output
 
 //wheels
@@ -68,10 +81,5 @@ const int flameLimit = 800; //0(FIRE)-1024(DARKNESSS)
 
 //switch
 #define powerPin 1
-
-//ultra sound config
-#define UStocm 57
-#define USwait 5800 //micros to wait for echo
-#define USmedian 3 //nomber of last values to make median of
 
 #endif //OCTOSIGHT_CONFIG_H

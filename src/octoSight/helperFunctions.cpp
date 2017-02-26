@@ -22,17 +22,22 @@ float angleToLine(int a, int b) {
 }
 
 int median(int *field, int len) {
+    int tmpField[USmedian];
+    for (int i = 0; i < len; i++) {
+        tmpField[i] = field[i];
+    }
+    
     int h, x = len / 2;
 
     while (len--) {
         for (int j = 0; j < len; j++) {
-            if (field[j] > field[j + 1]) {
-                h = field[j];
-                field[j] = field[j + 1];
-                field[j + 1] = h;
+            if (tmpField[j] > tmpField[j + 1]) {
+                h = tmpField[j];
+                tmpField[j] = tmpField[j + 1];
+                tmpField[j + 1] = h;
             }
         }
     }
 
-    return field[x];
+    return tmpField[x];
 }
