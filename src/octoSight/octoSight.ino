@@ -175,8 +175,7 @@ void go(int l, int angle) {
 
             lineDelay = lineBaseDelay;
         }
-  
-    
+
         delayMicroseconds(actDelay);
     }
 }
@@ -187,11 +186,11 @@ void go(int l) {
 
 //int time;
 void loop() {
-    //runSensors();
-    //printSensors();
+    runSensors();
+    printSensors();
 
-    go(20, 0);
-    Serial.println("aasdasd");
-    delay(5000);
+    //go(20, 0);
+    //Serial.println("aasdasd");
+    //delay(5000);
 }
 

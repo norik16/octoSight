@@ -40,10 +40,11 @@ void runSensors() {
     for (int i = 0; i < 5; i++) {
         /*if (median(lineMed[i], lineMedian) < whiteThreshold and lineRaw[i] > blackThreshold)
             line[i] = 1;*/
-        if (median(lineMed[i], lineMedian) - lineRaw[i] < -blackWhiteDiff) line[i] = -1;
-        if (-median(lineMed[i], lineMedian) + lineRaw[i] > blackWhiteDiff) line[i] = 1;
+        if (median(lineMed[i], lineMedian) - lineRaw[i] > blackWhiteDiff) line[i] = -1;
+        else if (-median(lineMed[i], lineMedian) + lineRaw[i] > blackWhiteDiff) line[i] = 1;
+        else line[i] = 0;
         lineMed[i][lineLastMed] = lineRaw[i];
-        lineLastMed = (lineLastMed + 1) % sizeof(lineMed[i])/sizeof(lineMed[i][0]);
+        lineLastMed = (lineLastMed + 1) % lineMedian;
     }
 
     runUltra();
