@@ -166,8 +166,8 @@ void go(int l) {
 
 //int time;
 void loop() {
-    runSensors();
-    printSensors();
+    //runSensors();
+    //printSensors();
     /*if(millis() - time > 500 || millis() - time < 0)
     {
       digitalWrite(US0outPin, HIGH);
@@ -182,7 +182,7 @@ void loop() {
       time = millis();
     }*/
 
-  //go(0, 20);
-  delay(500);
+  go(20, 0);
+  delay(1000);
 }
 

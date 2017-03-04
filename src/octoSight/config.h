@@ -13,7 +13,7 @@ const int d = 18.5; //wheel to wheel
 const int angleConst = 30; //turning constant
 const int pi = 3.141592;
 
-const int mDelay = 3000;
+const int mDelay = 1000;
 const long int lineBaseDelay = 100000;
 
 //TODO: constant to try
@@ -55,7 +55,6 @@ const int blackThreshold = 200; //the higher, the darker
 #define IR2Pin A2
 #define IR3Pin A1
 #define IR4Pin A0
-
 
 //input digital
 
