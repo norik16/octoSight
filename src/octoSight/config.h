@@ -32,7 +32,7 @@ const int blackThreshold = 200; //the higher, the darker
 #define UStocm 57
 #define USwaitlow 50000 //micros to wait for echo
 #define USwaithigh 500000 //micros to wait for echo
-#define USmedian 3 //number of last values to make median of
+#define USmedian 9 //number of last values to make median of
 
 
 //output
@@ -70,11 +70,11 @@ const int blackThreshold = 200; //the higher, the darker
 #define US3outPin 17
 
 //IR line from right to left
-#define line0Pin A15
-#define line1Pin A14
-#define line2Pin A13
-#define line3Pin A12
-#define line4Pin A11
+#define line0Pin A12
+#define line1Pin A15
+#define line2Pin A11
+#define line3Pin A10
+#define line4Pin A9
 
 //bumper from right to left
 #define bmp0Pin 41

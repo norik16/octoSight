@@ -49,8 +49,8 @@ void setup() {
     pinMode(line4Pin, INPUT);
 
     //bumper from right to left
-    pinMode(bmp0Pin, INPUT);
-    pinMode(bmp1Pin, INPUT);
+    pinMode(bmp0Pin, INPUT_PULLUP);
+    pinMode(bmp1Pin, INPUT_PULLUP);
 
     //switch
     pinMode(powerPin, INPUT);
@@ -182,7 +182,7 @@ void loop() {
       time = millis();
     }*/
 
-  go(0, 20);
-  delay(5000);
+  //go(0, 20);
+  delay(500);
 }
 

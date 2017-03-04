@@ -8,9 +8,10 @@ int US[8];
 
 //from left to right
 int USdis[4];
-int USdisx[4][USmedian];
-int USdisy[USmedian];
+int USdisOld[4][USmedian];
 bool UShigh[4];
+
+int ultraLastMed[4];
 
 unsigned long UStime[4];
 
@@ -28,7 +29,7 @@ void initUltra()
   US2();
   US3();
   for (int i = 0; i < 4; i++) USdis[i] = 10000;
-  for (int i = 0; i < 4 * USmedian; i++) USdisx[i%4][i/4] = 10000;
+  for (int i = 0; i < 4 * USmedian; i++) USdisOld[i%4][i/4] = 10000;
 }
 
 void runUltra() {
@@ -52,10 +53,11 @@ void runUltra() {
 
 void US0() {
     if (UShigh[0]) {
-        for (int i = 1; i < USmedian; i++) USdisx[0][i - 1] = USdisx[0][i];
-        USdisx[0][USmedian - 1] = (micros() - UStime[0]) / UStocm;
-        for (int i = 0; i < USmedian; i++) USdisy[i] = USdisx[0][i];
-        USdis[0] = median(USdisy, USmedian);
+        if((micros() - UStime[0]) / UStocm < 1000) {
+            USdisOld[0][ultraLastMed[0]] = (micros() - UStime[0]) / UStocm;
+            ultraLastMed[0] = ultraLastMed[0] < USmedian - 1 ? ultraLastMed[0] + 1 : 0;
+            USdis[0] = median(USdisOld[0], USmedian);
+        }
         digitalWrite(US0outPin, HIGH);
         delayMicroseconds(10);
         digitalWrite(US0outPin, LOW);
@@ -70,7 +72,11 @@ void US0() {
 
 void US1() {
     if (UShigh[1]) {
-        USdis[1] = (micros() - UStime[1]) / UStocm;
+        if((micros() - UStime[1]) / UStocm < 1000) {
+            USdisOld[1][ultraLastMed[1]] = (micros() - UStime[1]) / UStocm;
+            ultraLastMed[1] = ultraLastMed[1] < USmedian - 1 ? ultraLastMed[1] + 1 : 0;
+            USdis[1] = median(USdisOld[1], USmedian);
+        }
         digitalWrite(US1outPin, HIGH);
         delayMicroseconds(10);
         digitalWrite(US1outPin, LOW);
@@ -85,22 +91,30 @@ void US1() {
 
 void US2() {
     if (UShigh[2]) {
-        USdis[2] = (micros() - UStime[2]) / UStocm;
-        digitalWrite(US1outPin, HIGH);
+        if((micros() - UStime[2]) / UStocm < 1000) {
+            USdisOld[2][ultraLastMed[2]] = (micros() - UStime[2]) / UStocm;
+            ultraLastMed[2] = ultraLastMed[2] < USmedian - 1 ? ultraLastMed[2] + 1 : 0;
+            USdis[2] = median(USdisOld[2], USmedian);
+        }
+        digitalWrite(US2outPin, HIGH);
         delayMicroseconds(10);
-        digitalWrite(US1outPin, LOW);
-        US[6]++;
+        digitalWrite(US2outPin, LOW);
+        US[5]++;
         UStime[2] = micros();
     } else {
         UStime[2] = micros();
         US[2]++;
     }
-    UShigh[2] = !UShigh[0];
+    UShigh[2] = !UShigh[2];
 }
 
 void US3() {
     if (UShigh[3]) {
-        USdis[3] = (micros() - UStime[3]) / UStocm;
+        if((micros() - UStime[3]) / UStocm < 1000) {
+            USdisOld[3][ultraLastMed[3]] = (micros() - UStime[3]) / UStocm;
+            ultraLastMed[3] = ultraLastMed[3] < USmedian - 1 ? ultraLastMed[3] + 1 : 0;
+            USdis[3] = median(USdisOld[3], USmedian);
+        }
         digitalWrite(US3outPin, HIGH);
         delayMicroseconds(10);
         digitalWrite(US3outPin, LOW);
