@@ -8,12 +8,12 @@
 //#include "Arduino.h"
 
 //constants
-const float stepsPerCm = 6.4;
+const float stepsPerCm = 27;
 const int d = 18.5; //wheel to wheel
-const int angleConst = 30; //turning constant
+const float angleConst = 17.0/32; //turning constant
 const int pi = 3.141592;
 
-const int mDelay = 1000;
+const int mDelay = 700;
 const long int lineBaseDelay = 100000;
 
 //TODO: constant to try

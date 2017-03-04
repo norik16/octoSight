@@ -83,37 +83,39 @@ void go(int l, int angle) {
 
         if (angle > 0) {
             right = l * stepsPerCm;  //
-            left = right - d * M_PI * angle / 180;
+            left = right - d * angleConst * M_PI * angle / 180;
 
             rBaseDelay = mDelay;
             lBaseDelay = (int) (mDelay * (right / left));
 
         } else {
             left = l * stepsPerCm;
-            right = left - d * M_PI * abs(angle) / 180;
+            right = left - d * angleConst * M_PI * abs(angle) / 180;
 
             rBaseDelay = (int) (mDelay * (left / right));
             lBaseDelay = mDelay;
         }
 
+    Serial.print(rDelay);
+        Serial.print(" ");
+        Serial.print(lDelay);
+        Serial.print(" ");
+       Serial.print(right);
+        Serial.print(" ");
+        Serial.print(left);
+       Serial.println(" ");
+
     } else {
         angle > 0 ? digitalWrite(rightDirPin, HIGH) : digitalWrite(rightDirPin, LOW);
         angle > 0 ? digitalWrite(leftDirPin, LOW) : digitalWrite(leftDirPin, HIGH);
 
-        right = M_PI * d * abs(angle) * stepsPerCm / 180;
+        right = M_PI * d * angleConst * abs(angle) * stepsPerCm / 180;
         left = right;
 
         rBaseDelay = mDelay;
         lBaseDelay = mDelay;
 
-//        Serial.print(rDelay);
-//        Serial.print(" ");
-//        Serial.print(lDelay);
-//        Serial.print(" ");
-//        Serial.print(right);
-//        Serial.print(" ");
-//        Serial.print(left);
-//        Serial.println(" ");
+      
     }
 
     rDelay = rBaseDelay;
@@ -134,6 +136,9 @@ void go(int l, int angle) {
             }
             rDelay = rBaseDelay;
             rHigh = !rHigh;
+            
+      //  Serial.print(right);
+   //    Serial.println(" ");
         }
 
         if (lDelay <= 0) {
@@ -145,9 +150,12 @@ void go(int l, int angle) {
             }
             lDelay = lBaseDelay;
             lHigh = !lHigh;
+            
+       // Serial.print(left);
+    //   Serial.println(" ");
         }
 
-        if (lineDelay <= 0) {
+     /*   if (lineDelay <= 0) {
             runSensors();
             if (line[0] or line[1] or line[2] or line[3] or line[4]) metLine();
             if (flame[0] or flame[1] or flame[2] or flame[3] or flame[4]) solveCandle();
@@ -155,7 +163,8 @@ void go(int l, int angle) {
 
             lineDelay = lineBaseDelay;
         }
-
+  */
+    
         delayMicroseconds(actDelay);
     }
 }
@@ -182,7 +191,8 @@ void loop() {
       time = millis();
     }*/
 
-  go(20, 0);
-  delay(1000);
+  go(0, -90);
+    Serial.println("aasdasd");
+  delay(5000);
 }
 
