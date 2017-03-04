@@ -37,12 +37,14 @@ void runSensors() {
         if (flame[i] < 0) flame[i] = 0;
     }
 
-    /*for (int i = 0; i < 5; i++) {
-        if (median(lineMed[i], sizeof(lineMed[i])/sizeof(lineMed[i][0])) < whiteThreshold and lineRaw[i] > blackThreshold)
-            line[i] = 1;
+    for (int i = 0; i < 5; i++) {
+        /*if (median(lineMed[i], lineMedian) < whiteThreshold and lineRaw[i] > blackThreshold)
+            line[i] = 1;*/
+        if (median(lineMed[i], lineMedian) - lineRaw[i] < -blackWhiteDiff) line[i] = -1;
+        if (-median(lineMed[i], lineMedian) + lineRaw[i] > blackWhiteDiff) line[i] = 1;
         lineMed[i][lineLastMed] = lineRaw[i];
         lineLastMed = (lineLastMed + 1) % sizeof(lineMed[i])/sizeof(lineMed[i][0]);
-    }*/
+    }
 
     runUltra();
 }
@@ -58,7 +60,17 @@ void printSensors() {
     Serial.print(line[3]);
     Serial.print("\t");
     Serial.print(line[4]);
-    Serial.print("\tFlame:\t");
+    Serial.print("LineRaw:\t");
+    Serial.print(lineRaw[0]);
+    Serial.print("\t");
+    Serial.print(lineRaw[1]);
+    Serial.print("\t");
+    Serial.print(lineRaw[2]);
+    Serial.print("\t");
+    Serial.print(lineRaw[3]);
+    Serial.print("\t");
+    Serial.print(lineRaw[4]);
+    /*Serial.print("\tFlame:\t");
     Serial.print(flame[0]);
     Serial.print("\t");
     Serial.print(flame[1]);
@@ -84,10 +96,10 @@ void printSensors() {
     Serial.print(UStime[2]);
     Serial.print("\t");
     Serial.print(UStime[3]);*/
-    Serial.print("\tBumper: ");
+    /*Serial.print("\tBumper: ");
     Serial.print(bmp[0]);
     Serial.print(" ");
-    Serial.print(bmp[1]);
+    Serial.print(bmp[1]);*/
     Serial.println();
 }
 

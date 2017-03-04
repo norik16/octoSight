@@ -96,9 +96,9 @@ void go(int l, int angle) {
             lBaseDelay = mDelay;
         }
 
-    Serial.print(rDelay);
+    Serial.print(rBaseDelay);
         Serial.print(" ");
-        Serial.print(lDelay);
+        Serial.print(lBaseDelay);
         Serial.print(" ");
        Serial.print(right);
         Serial.print(" ");
@@ -126,6 +126,18 @@ void go(int l, int angle) {
         rDelay -= actDelay;
         lDelay -= actDelay;
         lineDelay -= actDelay;
+        /*Serial.print(rHigh);
+        Serial.print("\t");
+        Serial.print(lHigh);
+        Serial.print("\t");
+        Serial.print(rDelay);
+        Serial.print("\t");
+        Serial.print(lDelay);
+        Serial.print("\t");
+        Serial.print(right);
+        Serial.print("\t");
+        Serial.print(left);
+        Serial.println();*/
 
         if (rDelay <= 0) {
             if (rHigh) {
@@ -155,7 +167,7 @@ void go(int l, int angle) {
     //   Serial.println(" ");
         }
 
-     /*   if (lineDelay <= 0) {
+        if (lineDelay <= 0) {
             runSensors();
             if (line[0] or line[1] or line[2] or line[3] or line[4]) metLine();
             if (flame[0] or flame[1] or flame[2] or flame[3] or flame[4]) solveCandle();
@@ -163,7 +175,7 @@ void go(int l, int angle) {
 
             lineDelay = lineBaseDelay;
         }
-  */
+  
     
         delayMicroseconds(actDelay);
     }
@@ -177,22 +189,9 @@ void go(int l) {
 void loop() {
     //runSensors();
     //printSensors();
-    /*if(millis() - time > 500 || millis() - time < 0)
-    {
-      digitalWrite(US0outPin, HIGH);
-      digitalWrite(US1outPin, HIGH);
-      digitalWrite(US2outPin, HIGH);
-      digitalWrite(US3outPin, HIGH);
-      delayMicroseconds(100);
-      digitalWrite(US0outPin, LOW);
-      digitalWrite(US1outPin, LOW);
-      digitalWrite(US2outPin, LOW);
-      digitalWrite(US3outPin, LOW);
-      time = millis();
-    }*/
 
-  go(0, -90);
+    go(20, 0);
     Serial.println("aasdasd");
-  delay(5000);
+    delay(5000);
 }
 

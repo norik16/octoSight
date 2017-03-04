@@ -13,8 +13,8 @@ const int d = 18.5; //wheel to wheel
 const float angleConst = 17.0/32; //turning constant
 const int pi = 3.141592;
 
-const int mDelay = 700;
-const long int lineBaseDelay = 100000;
+const int mDelay = 500;
+const long int lineBaseDelay = 5000;
 
 //TODO: constant to try
 const float wheelRatio = 1.2;
@@ -25,6 +25,7 @@ const int flameLimit = 800; //0(FIRE)-1024(DARKNESSS)
 const int lineAvgLng = 6; //number of last values to make average of
 const int whiteThreshold = 100; //the lower, the whiter
 const int blackThreshold = 200; //the higher, the darker
+const int blackWhiteDiff = 100; //the higher, the darker
 #define lineMedian 6 //number of last values to make median of
 
 
@@ -45,7 +46,6 @@ const int blackThreshold = 200; //the higher, the darker
 
 //fan
 #define fanPin 1
-
 
 //input analog
 
