@@ -4,11 +4,13 @@
 
 #include "math.h"
 #include "states.h"
+#include "Arduino.h"
 
 
 int corners = 0;
 
 void goAlongLine() {
+    Serial.println("Going along line");
     corners++;
     if (corners < 6) {
         go(0, 180);
@@ -21,6 +23,7 @@ void goAlongLine() {
 }
 
 void metLine() {
+    Serial.println("Met line");
     int pairs = 0;
     int angle = 0;
 
@@ -39,12 +42,15 @@ void metLine() {
 }
 
 void findCandle() {
+    Serial.println("Finding candle");
     go(0, 360);
+    go(360);
     goAlongLine();
 }
 
 //solves a Candle once it is in reach of the sensors
 void solveCandle() {
+    Serial.println("Solving candle");
     int angle = 0;
     runSensors();
     if (flame[0] > 0) angle = -75;
@@ -129,7 +135,7 @@ void solveCandle() {
 }
 
 void metWall() {
-
+    Serial.println("Met wall");
     /////////////////////////////////////////////////////////////////////////////////////
     // find angle to miss the obstacle
 
@@ -166,9 +172,9 @@ void metWall() {
         if (lineDelay <= 0) {
             runSensors();
 
-            if (line[0] or line[1] or line[2] or line[3] or line[4]) metLine();
+            //if (line[0] or line[1] or line[2] or line[3] or line[4]) metLine();
             if (flame[0] or flame[1] or flame[2] or flame[3] or flame[4]) solveCandle();
-            if (USdis[2] > 500) foundWall = 0;
+            if (USdis[1] > wallLimit + 10) foundWall = 0;
 
             lineDelay = lineBaseDelay;
         }
@@ -230,9 +236,9 @@ void metWall() {
             if (line[0] or line[1] or line[2] or line[3] or line[4]) metLine();
             if (flame[0] or flame[1] or flame[2] or flame[3] or flame[4]) solveCandle();
 
-            if (USdis[1] < 110) metWall();
+            if (USdis[1] < wallLimit) metWall();
             if (USdis[2] < 40) rBaseDelay = mDelay * wheelRatio, lBaseDelay = mDelay;
-            if (USdis[3] < 500) foundWall = 1;
+            if (USdis[3] < 100) foundWall = 1;
 
             lineDelay = lineBaseDelay;
         }

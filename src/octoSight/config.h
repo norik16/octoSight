@@ -13,13 +13,15 @@ const int d = 18.5; //wheel to wheel
 const float angleConst = 17.0/32; //turning constant
 const int pi = 3.141592;
 
-const int mDelay = 500;
-const long int lineBaseDelay = 5000;
+const int mDelay = 700;
+const long int lineBaseDelay = 500;
 
 //TODO: constant to try
 const float wheelRatio = 1.2;
 
-const int flameLimit = 800; //0(FIRE)-1024(DARKNESSS)
+const int flameLimit = 500; //0(FIRE)-1024(DARKNESSS)
+
+#define wallLimit 50
 
 //line detection config
 const int lineAvgLng = 6; //number of last values to make average of

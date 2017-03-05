@@ -19,6 +19,7 @@ void setup() {
 
     //fan
     pinMode(fanPin, OUTPUT);
+    pinMode(fanPin, LOW);
 
 
     //input analog
@@ -59,6 +60,8 @@ void setup() {
 
     initSensors();
     initUltra();
+
+    for(int i = 0; i < lineMedian; i++) runSensors();
 }
 
 void go(int l, int angle) {
@@ -96,14 +99,14 @@ void go(int l, int angle) {
             lBaseDelay = mDelay;
         }
 
-    Serial.print(rBaseDelay);
+    /*Serial.print(rBaseDelay);
         Serial.print(" ");
         Serial.print(lBaseDelay);
         Serial.print(" ");
        Serial.print(right);
         Serial.print(" ");
         Serial.print(left);
-       Serial.println(" ");
+       Serial.println(" ");*/
 
     } else {
         angle > 0 ? digitalWrite(rightDirPin, HIGH) : digitalWrite(rightDirPin, LOW);
@@ -171,7 +174,7 @@ void go(int l, int angle) {
             runSensors();
             if (line[0] or line[1] or line[2] or line[3] or line[4]) metLine();
             if (flame[0] or flame[1] or flame[2] or flame[3] or flame[4]) solveCandle();
-            if (USdis[1] < 110 or USdis[2] < 110) metWall();
+            if (USdis[1] < wallLimit or USdis[2] < wallLimit) metWall();
 
             lineDelay = lineBaseDelay;
         }
@@ -186,11 +189,12 @@ void go(int l) {
 
 //int time;
 void loop() {
+  //findCandle();
     runSensors();
-    printSensors();
+    //printSensors();
 
-    //go(20, 0);
+  //  go(20, 0);
     //Serial.println("aasdasd");
-    //delay(5000);
+//    delay(5000);
 }
 

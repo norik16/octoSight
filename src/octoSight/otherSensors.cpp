@@ -48,6 +48,7 @@ void runSensors() {
     }
 
     runUltra();
+    printSensors();
 }
 
 void printSensors() {
@@ -71,7 +72,7 @@ void printSensors() {
     Serial.print(lineRaw[3]);
     Serial.print("\t");
     Serial.print(lineRaw[4]);
-    /*Serial.print("\tFlame:\t");
+    Serial.print("\tFlame:\t");
     Serial.print(flame[0]);
     Serial.print("\t");
     Serial.print(flame[1]);
@@ -97,10 +98,10 @@ void printSensors() {
     Serial.print(UStime[2]);
     Serial.print("\t");
     Serial.print(UStime[3]);*/
-    /*Serial.print("\tBumper: ");
+    Serial.print("\tBumper: ");
     Serial.print(bmp[0]);
     Serial.print(" ");
-    Serial.print(bmp[1]);*/
+    Serial.print(bmp[1]);
     Serial.println();
 }
 
