@@ -9,6 +9,76 @@
 
 int corners = 0;
 
+int terminate() {
+    switch(state) {
+        case FINDCANDLE:
+            
+            break;
+        case METWALL:
+            
+            break;
+        case METLINE:
+            
+            break;
+        case GOALONGLINE:
+            
+            break;
+        case SOLVECANDLE:
+            
+            break;
+        case GOAHEAD:
+            
+            break;
+    }
+    return 0;
+}
+
+int goAlongLine() {
+    Serial.println("Going along line");
+    go(0, 180);
+    go(50, -90);
+    go(500);
+}
+
+int goAhead() {
+    
+}
+
+int metLine() {
+    Serial.println("Met line");
+    int right = 0;
+    int left = 0;
+    while(!line[1] or !line[3] or line[0] or line[2] or line[4])
+    {
+        right = 0, left = 0;
+        runSensors();
+        if(line[1] or line[2] or line[3] or line [0] and line[4]) {
+            if(line[0]) right -= 2;
+            if(line[5]) left -= 2;
+            if(line[3]) right += 1, left += 1;
+        }
+        else {
+            if(line[0]) left += 2;
+            else right += 2;
+        }
+        go(left + right, right - left);
+    }
+    return GOALONGLINE;
+}
+
+int findCandle() {
+    
+}
+
+int solveCandle() {
+    
+}
+
+int metWall() {
+    
+}
+
+/*
 void goAlongLine() {
     Serial.println("Going along line");
     corners++;
@@ -303,4 +373,4 @@ void metWall() {
     }
 
     go(360);
-}
+}*/

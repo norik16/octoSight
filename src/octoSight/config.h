@@ -38,6 +38,14 @@ const int blackWhiteDiff = 100; //the higher, the darker
 #define USmedian 9 //number of last values to make median of
 
 
+//states
+#define FINDCANDLE 0
+#define METWALL 1
+#define METLINE 2
+#define GOALONGLINE 3
+#define SOLVECANDLE 4
+#define GOAHEAD 5
+
 //output
 
 //wheels

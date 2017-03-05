@@ -13,7 +13,7 @@ int flame[5];
 bool bmp[2];
 
 void initSensors() {
-
+    for(int i = 0; i < 5; i++) line[i] = 0;
 }
 
 void runSensors() {
@@ -40,9 +40,9 @@ void runSensors() {
     for (int i = 0; i < 5; i++) {
         /*if (median(lineMed[i], lineMedian) < whiteThreshold and lineRaw[i] > blackThreshold)
             line[i] = 1;*/
-        if (median(lineMed[i], lineMedian) - lineRaw[i] > blackWhiteDiff) line[i] = -1;
+        if (median(lineMed[i], lineMedian) - lineRaw[i] > blackWhiteDiff) line[i] = 0;
         else if (-median(lineMed[i], lineMedian) + lineRaw[i] > blackWhiteDiff) line[i] = 1;
-        else line[i] = 0;
+        //else line[i] = 0;
         lineMed[i][lineLastMed] = lineRaw[i];
         lineLastMed = (lineLastMed + 1) % lineMedian;
     }

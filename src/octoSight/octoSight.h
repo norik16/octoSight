@@ -10,11 +10,13 @@
 #include "ultraSensors.h"
 #include "states.h"
 
+extern int state;
+
 //l in cm (possitive forward), angle in degrees (mathematical direction)
-void go(int l, int angle);
+int go(int l, int angle);
 
 //go straight
-void go(int l);
+int go(int l);
 
 
 #endif //OCTOSIGHT_MAIN_HH_H

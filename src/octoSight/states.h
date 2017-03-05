@@ -13,13 +13,16 @@
 #include "ultraSensors.h"
 #include "config.h"
 
-void goAlongLine();
-void metLine();
+int terminate();
 
-void findCandle();
-void solveCandle();
+int goAlongLine();
+int goAhead();
+int metLine();
 
-void metWall();
+int findCandle();
+int solveCandle();
+
+int metWall();
 
 
 #endif //MAIN_STATES_H

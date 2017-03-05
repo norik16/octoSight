@@ -5,8 +5,9 @@
 #include <math.h>
 //#include <Arduino.h>
 
-
 #include "octoSight.h"
+
+int state;
 
 void setup() {
     //set pins as output
@@ -62,11 +63,14 @@ void setup() {
     initUltra();
 
     for(int i = 0; i < lineMedian; i++) runSensors();
+
+    state = 0;
 }
 
-void go(int l, int angle) {
+int go(int l, int angle) {
     int rBaseDelay;
     int lBaseDelay;
+    int finished;
     float right;
     float left;
 
@@ -98,17 +102,8 @@ void go(int l, int angle) {
             rBaseDelay = (int) (mDelay * (left / right));
             lBaseDelay = mDelay;
         }
-
-    /*Serial.print(rBaseDelay);
-        Serial.print(" ");
-        Serial.print(lBaseDelay);
-        Serial.print(" ");
-       Serial.print(right);
-        Serial.print(" ");
-        Serial.print(left);
-       Serial.println(" ");*/
-
-    } else {
+    }
+    else {
         angle > 0 ? digitalWrite(rightDirPin, HIGH) : digitalWrite(rightDirPin, LOW);
         angle > 0 ? digitalWrite(leftDirPin, LOW) : digitalWrite(leftDirPin, HIGH);
 
@@ -117,8 +112,6 @@ void go(int l, int angle) {
 
         rBaseDelay = mDelay;
         lBaseDelay = mDelay;
-
-      
     }
 
     rDelay = rBaseDelay;
@@ -129,18 +122,6 @@ void go(int l, int angle) {
         rDelay -= actDelay;
         lDelay -= actDelay;
         lineDelay -= actDelay;
-        /*Serial.print(rHigh);
-        Serial.print("\t");
-        Serial.print(lHigh);
-        Serial.print("\t");
-        Serial.print(rDelay);
-        Serial.print("\t");
-        Serial.print(lDelay);
-        Serial.print("\t");
-        Serial.print(right);
-        Serial.print("\t");
-        Serial.print(left);
-        Serial.println();*/
 
         if (rDelay <= 0) {
             if (rHigh) {
@@ -151,9 +132,6 @@ void go(int l, int angle) {
             }
             rDelay = rBaseDelay;
             rHigh = !rHigh;
-            
-      //  Serial.print(right);
-   //    Serial.println(" ");
         }
 
         if (lDelay <= 0) {
@@ -165,16 +143,12 @@ void go(int l, int angle) {
             }
             lDelay = lBaseDelay;
             lHigh = !lHigh;
-            
-       // Serial.print(left);
-    //   Serial.println(" ");
         }
 
         if (lineDelay <= 0) {
             runSensors();
-            if (line[0] or line[1] or line[2] or line[3] or line[4]) metLine();
-            if (flame[0] or flame[1] or flame[2] or flame[3] or flame[4]) solveCandle();
-            if (USdis[1] < wallLimit or USdis[2] < wallLimit) metWall();
+            finished = terminate();
+            if(finished) return finished;
 
             lineDelay = lineBaseDelay;
         }
@@ -183,18 +157,43 @@ void go(int l, int angle) {
     }
 }
 
-void go(int l) {
-    go(l, 0);
+int go(int l) {
+    return go(l, 0);
 }
 
 //int time;
 void loop() {
-  //findCandle();
-    runSensors();
+    switch(state)
+    {
+        case FINDCANDLE:
+            state = findCandle();
+            break;
+        case METWALL:
+            state = metWall();
+            break;
+        case METLINE:
+            state = metLine();
+            break;
+        case GOALONGLINE:
+            state = goAlongLine();
+            break;
+        case SOLVECANDLE:
+            state = solveCandle();
+            break;
+        case GOAHEAD:
+            state = goAhead();
+            break;
+        default:
+            state = 0;
+            break;
+    }
+    
+    //findCandle();
+    //runSensors();
     //printSensors();
 
-  //  go(20, 0);
+    //go(20, 0);
     //Serial.println("aasdasd");
-//    delay(5000);
+    //delay(5000);
 }
 
