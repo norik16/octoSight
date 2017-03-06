@@ -39,12 +39,12 @@ const int blackWhiteDiff = 100; //the higher, the darker
 
 
 //states
-#define FINDCANDLE 0
-#define METWALL 1
-#define METLINE 2
-#define GOALONGLINE 3
-#define SOLVECANDLE 4
-#define GOAHEAD 5
+#define FINDCANDLE 1
+#define METWALL 2
+#define METLINE 3
+#define GOALONGLINE 4
+#define SOLVECANDLE 5
+#define GOAHEAD 6
 
 //output
 

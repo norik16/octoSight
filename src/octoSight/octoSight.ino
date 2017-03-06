@@ -83,41 +83,18 @@ int go(int l, int angle) {
     bool rHigh = 1;
     bool lHigh = 1;
 
-//    if (l) {
-//        l > 0 ? digitalWrite(rightDirPin, HIGH) : digitalWrite(rightDirPin, LOW);
-//        l > 0 ? digitalWrite(leftDirPin, HIGH) : digitalWrite(leftDirPin, LOW);
-
-    if (angle > 0) {
-        right = l * stepsPerCm;
-        left = right - d * angleConst * M_PI * angle / 180;
-
-        rBaseDelay = mDelay;
-        lBaseDelay = abs((int) (mDelay * (right / left)));
-
-    } else {
-        left = l * stepsPerCm;
-        right = left - d * angleConst * M_PI * abs(angle) / 180;
-
-        rBaseDelay = abs((int) (mDelay * (left / right)));
-        lBaseDelay = mDelay;
-    }
+    left = l * stepsPerCm - stepsPerCm * d * angleConst * M_PI * angle / 180;
+    right = l * stepsPerCm + stepsPerCm * d * angleConst * M_PI * angle / 180;
+        
     right > 0 ? digitalWrite(rightDirPin, HIGH) : digitalWrite(rightDirPin, LOW);
     left > 0 ? digitalWrite(rightDirPin, HIGH) : digitalWrite(rightDirPin, LOW);
 
     right = abs(right);
     left = abs(left);
-    
-//    }
-//    else {
-//        angle > 0 ? digitalWrite(rightDirPin, HIGH) : digitalWrite(rightDirPin, LOW);
-//        angle > 0 ? digitalWrite(leftDirPin, LOW) : digitalWrite(leftDirPin, HIGH);
-//
-//        right = M_PI * d * angleConst * abs(angle) * stepsPerCm / 180;
-//        left = right;
-//
-//        rBaseDelay = mDelay;
-//        lBaseDelay = mDelay;
-//    }
+
+    rBaseDelay = abs((int) (mDelay * (left > right) ? (left / right) : 1));
+    lBaseDelay = abs((int) (mDelay * (left < right) ? (right / left) : 1));
+
     Serial.println("going");
 
     rDelay = rBaseDelay;
@@ -194,7 +171,7 @@ void loop() {
             state = goAhead();
             break;
         default:
-            state = 0;
+            state = 1;
             break;
     }
     //go(20);
