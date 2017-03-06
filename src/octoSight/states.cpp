@@ -27,7 +27,7 @@ int terminate() {
             
             break;
         case GOAHEAD:
-            
+            if(line[0] or line[1] or line[2] or line[3] or line[4]) return METLINE;
             break;
     }
     return 0;
@@ -37,11 +37,12 @@ int goAlongLine() {
     Serial.println("Going along line");
     go(0, 180);
     go(50, -90);
-    go(500);
+    return GOAHEAD;
 }
 
 int goAhead() {
-    
+    Serial.println("Going ahead");
+    return go(500);
 }
 
 int metLine() {
@@ -54,28 +55,32 @@ int metLine() {
         runSensors();
         if(line[1] or line[2] or line[3] or line [0] and line[4]) {
             if(line[0]) right -= 2;
-            if(line[5]) left -= 2;
-            if(line[3]) right += 1, left += 1;
+            if(line[4]) left -= 2;
+            if(line[2]) right += 1, left += 1;
         }
         else {
             if(line[0]) left += 2;
-            else right += 2;
+            else right += 2;s
         }
+        printSensors();
+        Serial.print(left);
+        Serial.print("\t");
+        Serial.println(right);
         go(left + right, right - left);
     }
     return GOALONGLINE;
 }
 
 int findCandle() {
-    
+    Serial.println("Finding candle");
 }
 
 int solveCandle() {
-    
+    Serial.println("Solving candle");
 }
 
 int metWall() {
-    
+    Serial.println("Met wall");
 }
 
 /*

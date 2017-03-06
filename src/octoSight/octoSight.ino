@@ -63,8 +63,9 @@ void setup() {
     initUltra();
 
     for(int i = 0; i < lineMedian; i++) runSensors();
+    for(int i = 0; i < 5; i++) line[i] = 0;
 
-    state = 0;
+    state = GOALONGLINE;
 }
 
 int go(int l, int angle) {
@@ -82,37 +83,42 @@ int go(int l, int angle) {
     bool rHigh = 1;
     bool lHigh = 1;
 
-    if (l) {
-        l > 0 ? digitalWrite(rightDirPin, HIGH) : digitalWrite(rightDirPin, LOW);
-        l > 0 ? digitalWrite(leftDirPin, HIGH) : digitalWrite(leftDirPin, LOW);
+//    if (l) {
+//        l > 0 ? digitalWrite(rightDirPin, HIGH) : digitalWrite(rightDirPin, LOW);
+//        l > 0 ? digitalWrite(leftDirPin, HIGH) : digitalWrite(leftDirPin, LOW);
 
-        l = abs(l);
-
-        if (angle > 0) {
-            right = l * stepsPerCm;  //
-            left = right - d * angleConst * M_PI * angle / 180;
-
-            rBaseDelay = mDelay;
-            lBaseDelay = (int) (mDelay * (right / left));
-
-        } else {
-            left = l * stepsPerCm;
-            right = left - d * angleConst * M_PI * abs(angle) / 180;
-
-            rBaseDelay = (int) (mDelay * (left / right));
-            lBaseDelay = mDelay;
-        }
-    }
-    else {
-        angle > 0 ? digitalWrite(rightDirPin, HIGH) : digitalWrite(rightDirPin, LOW);
-        angle > 0 ? digitalWrite(leftDirPin, LOW) : digitalWrite(leftDirPin, HIGH);
-
-        right = M_PI * d * angleConst * abs(angle) * stepsPerCm / 180;
-        left = right;
+    if (angle > 0) {
+        right = l * stepsPerCm;
+        left = right - d * angleConst * M_PI * angle / 180;
 
         rBaseDelay = mDelay;
+        lBaseDelay = abs((int) (mDelay * (right / left)));
+
+    } else {
+        left = l * stepsPerCm;
+        right = left - d * angleConst * M_PI * abs(angle) / 180;
+
+        rBaseDelay = abs((int) (mDelay * (left / right)));
         lBaseDelay = mDelay;
     }
+    right > 0 ? digitalWrite(rightDirPin, HIGH) : digitalWrite(rightDirPin, LOW);
+    left > 0 ? digitalWrite(rightDirPin, HIGH) : digitalWrite(rightDirPin, LOW);
+
+    right = abs(right);
+    left = abs(left);
+    
+//    }
+//    else {
+//        angle > 0 ? digitalWrite(rightDirPin, HIGH) : digitalWrite(rightDirPin, LOW);
+//        angle > 0 ? digitalWrite(leftDirPin, LOW) : digitalWrite(leftDirPin, HIGH);
+//
+//        right = M_PI * d * angleConst * abs(angle) * stepsPerCm / 180;
+//        left = right;
+//
+//        rBaseDelay = mDelay;
+//        lBaseDelay = mDelay;
+//    }
+    Serial.println("going");
 
     rDelay = rBaseDelay;
     lDelay = lBaseDelay;
@@ -148,7 +154,11 @@ int go(int l, int angle) {
         if (lineDelay <= 0) {
             runSensors();
             finished = terminate();
-            if(finished) return finished;
+            if(finished)
+            {
+              //Serial.println("termnating");
+              return finished;
+            }
 
             lineDelay = lineBaseDelay;
         }
@@ -187,6 +197,8 @@ void loop() {
             state = 0;
             break;
     }
+    //go(20);
+    //delay(1000);
     
     //findCandle();
     //runSensors();

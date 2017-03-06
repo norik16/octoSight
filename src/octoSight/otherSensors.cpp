@@ -9,6 +9,12 @@ int lineRaw[5];
 int lineMed[5][lineMedian];
 int lineLastMed = 0;
 
+int lastWhite = 0;
+int lastWhiteAge = lineMedian;
+int lastBlack = 0;
+int lastBlackAge = lineMedian;
+
+
 int flame[5];
 bool bmp[2];
 
@@ -40,15 +46,27 @@ void runSensors() {
     for (int i = 0; i < 5; i++) {
         /*if (median(lineMed[i], lineMedian) < whiteThreshold and lineRaw[i] > blackThreshold)
             line[i] = 1;*/
-        if (median(lineMed[i], lineMedian) - lineRaw[i] > blackWhiteDiff) line[i] = 0;
-        else if (-median(lineMed[i], lineMedian) + lineRaw[i] > blackWhiteDiff) line[i] = 1;
+        if (max(lastBlack, median(lineMed[i], lineMedian)) - lineRaw[i] > blackWhiteDiff ) {
+          line[i] = 0;
+          lastWhite = lineRaw[i];
+          lastWhiteAge = 0;
+        }
+        else if (min(median(lineMed[i], lineMedian), lastWhite) - lineRaw[i] < -blackWhiteDiff) {
+          line[i] = 1;
+          lastBlack = lineRaw[i];
+          lastBlackAge = 0;
+        }
+        lastBlackAge++;
+        lastWhiteAge++;
+        if(lastBlackAge >= lineMedian) lastBlack = 0;
+        if(lastWhiteAge >= lineMedian) lastWhite = 10000;
         //else line[i] = 0;
         lineMed[i][lineLastMed] = lineRaw[i];
         lineLastMed = (lineLastMed + 1) % lineMedian;
     }
 
     runUltra();
-    printSensors();
+    //printSensors();
 }
 
 void printSensors() {
