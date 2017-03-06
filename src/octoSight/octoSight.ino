@@ -92,8 +92,10 @@ int go(int l, int angle) {
     right = abs(right);
     left = abs(left);
 
-    rBaseDelay = abs((int) (mDelay * (left > right) ? (left / right) : 1));
-    lBaseDelay = abs((int) (mDelay * (left < right) ? (right / left) : 1));
+    rBaseDelay = mDelay;
+    lBaseDelay = mDelay;
+    if(right < left) rBaseDelay *= (left / right);
+    if(left < right) lBaseDelay *= (right / left);
 
     Serial.println("going");
 
