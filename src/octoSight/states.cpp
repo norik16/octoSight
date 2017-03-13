@@ -60,7 +60,7 @@ int metLine() {
         }
         else {
             if(line[0]) left += 2;
-            else right += 2;s
+            else right += 2;
         }
         printSensors();
         Serial.print(left);

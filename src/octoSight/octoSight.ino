@@ -1,4 +1,4 @@
-//
+  //
 // Created by ronald on 17.2.17.
 //
 
@@ -20,7 +20,7 @@ void setup() {
 
     //fan
     pinMode(fanPin, OUTPUT);
-    pinMode(fanPin, LOW);
+    digitalWrite(fanPin, LOW);
 
 
     //input analog
@@ -69,14 +69,14 @@ void setup() {
 }
 
 int go(int l, int angle) {
-    int rBaseDelay;
-    int lBaseDelay;
+    long rBaseDelay;
+    long lBaseDelay;
     int finished;
     float right;
     float left;
 
-    int rDelay;
-    int lDelay;
+    long rDelay;
+    long lDelay;
 
     long lineDelay = lineBaseDelay;
 
@@ -92,17 +92,22 @@ int go(int l, int angle) {
         left = right - d * angleConst * M_PI * angle / 180;
 
         rBaseDelay = mDelay;
-        lBaseDelay = abs((int) (mDelay * (right / left)));
+        lBaseDelay = abs((int) (mDelay * (left and right ? (right / left) : 1000000)));
 
     } else {
         left = l * stepsPerCm;
         right = left - d * angleConst * M_PI * abs(angle) / 180;
 
-        rBaseDelay = abs((int) (mDelay * (left / right)));
+        rBaseDelay = abs((int) (mDelay * (right and left ? (left / right) : 1000000)));
         lBaseDelay = mDelay;
     }
     right > 0 ? digitalWrite(rightDirPin, HIGH) : digitalWrite(rightDirPin, LOW);
     left > 0 ? digitalWrite(rightDirPin, HIGH) : digitalWrite(rightDirPin, LOW);
+
+    Serial.println(left);
+    Serial.println(right);
+    Serial.println(lBaseDelay);
+    Serial.println(rBaseDelay);
 
     right = abs(right);
     left = abs(left);
@@ -123,7 +128,7 @@ int go(int l, int angle) {
     rDelay = rBaseDelay;
     lDelay = lBaseDelay;
 
-    while (left >= 0 and right >= 0) {
+    while (left >= 0 or right >= 0) {
         int actDelay = min(rDelay, lDelay);
         rDelay -= actDelay;
         lDelay -= actDelay;
@@ -173,33 +178,33 @@ int go(int l) {
 
 //int time;
 void loop() {
-    switch(state)
-    {
-        case FINDCANDLE:
-            state = findCandle();
-            break;
-        case METWALL:
-            state = metWall();
-            break;
-        case METLINE:
-            state = metLine();
-            break;
-        case GOALONGLINE:
-            state = goAlongLine();
-            break;
-        case SOLVECANDLE:
-            state = solveCandle();
-            break;
-        case GOAHEAD:
-            state = goAhead();
-            break;
-        default:
-            state = 0;
-            break;
-    }
-    //go(20);
-    //delay(1000);
-    
+//    switch(state)
+//    {
+//        case FINDCANDLE:
+//            state = findCandle();
+//            break;
+//        case METWALL:
+//            state = metWall();
+//            break;
+//        case METLINE:
+//            state = metLine();
+//            break;
+//        case GOALONGLINE:
+//            state = goAlongLine();
+//            break;
+//        case SOLVECANDLE:
+//            state = solveCandle();
+//            break;
+//        case GOAHEAD:
+//            state = goAhead();
+//            break;
+//        default:
+//            state = 0;
+//            break;
+//    }
+//    go(20);
+//    delay(1000);
+
     //findCandle();
     //runSensors();
     //printSensors();

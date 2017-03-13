@@ -55,7 +55,7 @@ const int blackWhiteDiff = 100; //the higher, the darker
 #define rightStepPin 51
 
 //fan
-#define fanPin 13
+#define fanPin 8
 
 //input analog
 
