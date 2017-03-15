@@ -62,13 +62,16 @@ void setup() {
     initSensors();
     initUltra();
 
+//    printSensors();
     for(int i = 0; i < lineMedian; i++) runSensors();
+//    printSensors();
     for(int i = 0; i < 5; i++) line[i] = 0;
+//    printSensors();
 
-    state = GOALONGLINE;
+    state = GOAHEAD;
 }
 
-int go(int l, int angle) {
+int go(float l, float angle) {
     long rBaseDelay;
     long lBaseDelay;
     int finished;
@@ -83,52 +86,36 @@ int go(int l, int angle) {
     bool rHigh = 1;
     bool lHigh = 1;
 
-//    if (l) {
-//        l > 0 ? digitalWrite(rightDirPin, HIGH) : digitalWrite(rightDirPin, LOW);
-//        l > 0 ? digitalWrite(leftDirPin, HIGH) : digitalWrite(leftDirPin, LOW);
+    left = l * stepsPerCm - stepsPerCm * d * angleConst * M_PI * angle / 180;
+    right = l * stepsPerCm + stepsPerCm * d * angleConst * M_PI * angle / 180;
 
-    if (angle > 0) {
-        right = l * stepsPerCm;
-        left = right - d * angleConst * M_PI * angle / 180;
-
-        rBaseDelay = mDelay;
-        lBaseDelay = abs((int) (mDelay * (left and right ? (right / left) : 1000000)));
-
-    } else {
-        left = l * stepsPerCm;
-        right = left - d * angleConst * M_PI * abs(angle) / 180;
-
-        rBaseDelay = abs((int) (mDelay * (right and left ? (left / right) : 1000000)));
-        lBaseDelay = mDelay;
-    }
     right > 0 ? digitalWrite(rightDirPin, HIGH) : digitalWrite(rightDirPin, LOW);
-    left > 0 ? digitalWrite(rightDirPin, HIGH) : digitalWrite(rightDirPin, LOW);
-
-    Serial.println(left);
-    Serial.println(right);
-    Serial.println(lBaseDelay);
-    Serial.println(rBaseDelay);
+    left > 0 ? digitalWrite(leftDirPin, HIGH) : digitalWrite(leftDirPin, LOW);
 
     right = abs(right);
     left = abs(left);
-    
-//    }
-//    else {
-//        angle > 0 ? digitalWrite(rightDirPin, HIGH) : digitalWrite(rightDirPin, LOW);
-//        angle > 0 ? digitalWrite(leftDirPin, LOW) : digitalWrite(leftDirPin, HIGH);
+
+    rBaseDelay = mDelay;
+    lBaseDelay = mDelay;
+    if(left and right)
+    {
+        if(right < left) rBaseDelay *= (left / right);
+        if(left < right) lBaseDelay *= (right / left);
+    }
+    else if(!left) lBaseDelay *= 1000000;
+    else if(!right)rBaseDelay *= 1000000;
+
+//    Serial.println(left);
+//    Serial.println(right);
+//    Serial.println(lBaseDelay);
+//    Serial.println(rBaseDelay);
 //
-//        right = M_PI * d * angleConst * abs(angle) * stepsPerCm / 180;
-//        left = right;
-//
-//        rBaseDelay = mDelay;
-//        lBaseDelay = mDelay;
-//    }
-    Serial.println("going");
+//    Serial.println("going");
 
     rDelay = rBaseDelay;
     lDelay = lBaseDelay;
 
-    while (left >= 0 or right >= 0) {
+    while (left > 0 or right > 0) {
         int actDelay = min(rDelay, lDelay);
         rDelay -= actDelay;
         lDelay -= actDelay;
@@ -178,36 +165,45 @@ int go(int l) {
 
 //int time;
 void loop() {
-//    switch(state)
-//    {
-//        case FINDCANDLE:
-//            state = findCandle();
-//            break;
-//        case METWALL:
-//            state = metWall();
-//            break;
-//        case METLINE:
-//            state = metLine();
-//            break;
-//        case GOALONGLINE:
-//            state = goAlongLine();
-//            break;
-//        case SOLVECANDLE:
-//            state = solveCandle();
-//            break;
-//        case GOAHEAD:
-//            state = goAhead();
-//            break;
-//        default:
-//            state = 0;
-//            break;
-//    }
+    switch(state)
+    {
+        case FINDCANDLE:
+            state = findCandle();
+            break;
+        case METWALL:
+            state = metWall();
+            break;
+        case METLINE:
+            state = metLine();
+            break;
+        case GOALONGLINE:
+            state = goAlongLine();
+            break;
+        case SOLVECANDLE:
+            state = solveCandle();
+            break;
+        case GOAHEAD:
+            state = goAhead();
+            break;
+        case KILL:
+            state = kill();
+            break;
+        case ADJUSTCANDLE:
+            state = adjustCandle();
+            break;
+        case GOBACK:
+            state = goBack();
+            break;
+        default:
+            state = 1;
+            break;
+    }
 //    go(20);
 //    delay(1000);
 
     //findCandle();
-    //runSensors();
-    //printSensors();
+//    runSensors();
+//    printSensors();
 
     //go(20, 0);
     //Serial.println("aasdasd");

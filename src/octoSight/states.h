@@ -18,11 +18,14 @@ int terminate();
 int goAlongLine();
 int goAhead();
 int metLine();
+int metWall();
 
 int findCandle();
 int solveCandle();
+int adjustCandle();
+int kill();
+int goBack();
 
-int metWall();
 
 
 #endif //MAIN_STATES_H

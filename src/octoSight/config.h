@@ -24,11 +24,11 @@ const int flameLimit = 500; //0(FIRE)-1024(DARKNESSS)
 #define wallLimit 50
 
 //line detection config
-const int lineAvgLng = 6; //number of last values to make average of
-const int whiteThreshold = 100; //the lower, the whiter
-const int blackThreshold = 200; //the higher, the darker
-const int blackWhiteDiff = 100; //the higher, the darker
-#define lineMedian 6 //number of last values to make median of
+#define lineMedian 9 //number of last values to make median of
+const int lineAvgLng = lineMedian; //number of last values to make average of
+const int whiteThreshold = 200; //the lower, the whiter
+const int blackThreshold = 300; //the higher, the darker
+const int blackWhiteDiff = 150; //the higher, the darker
 
 
 //ultra sound config
@@ -39,12 +39,15 @@ const int blackWhiteDiff = 100; //the higher, the darker
 
 
 //states
-#define FINDCANDLE 0
-#define METWALL 1
-#define METLINE 2
-#define GOALONGLINE 3
-#define SOLVECANDLE 4
-#define GOAHEAD 5
+#define FINDCANDLE 1
+#define METWALL 2
+#define METLINE 3
+#define GOALONGLINE 4
+#define SOLVECANDLE 5
+#define GOAHEAD 6
+#define KILL 7
+#define ADJUSTCANDLE 8
+#define GOBACK 9
 
 //output
 
@@ -79,11 +82,11 @@ const int blackWhiteDiff = 100; //the higher, the darker
 #define US3outPin 17
 
 //IR line from right to left
-#define line0Pin A12
+#define line0Pin A14
 #define line1Pin A15
-#define line2Pin A11
-#define line3Pin A10
-#define line4Pin A9
+#define line2Pin A13
+#define line3Pin A7
+#define line4Pin A11
 
 //bumper from right to left
 #define bmp0Pin 41

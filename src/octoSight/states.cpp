@@ -10,6 +10,7 @@
 int corners = 0;
 
 int terminate() {
+    if(state != FINDCANDLE and state != SOLVECANDLE and state != ADJUSTCANDLE and (flame[0] or flame[1] or flame[2] or flame [3] or flame[4])) return FINDCANDLE;
     switch(state) {
         case FINDCANDLE:
             
@@ -18,16 +19,25 @@ int terminate() {
             
             break;
         case METLINE:
-            
+            //if(line[1] and line[3]) return GOALONGLINE;
             break;
         case GOALONGLINE:
             
             break;
         case SOLVECANDLE:
-            
+            if(line[0] or line[1] or line[2] or line[3] or line[4]) return KILL;
             break;
         case GOAHEAD:
             if(line[0] or line[1] or line[2] or line[3] or line[4]) return METLINE;
+            break;
+        case KILL:
+
+            break;
+        case ADJUSTCANDLE:
+
+            break;
+        case GOBACK:
+
             break;
     }
     return 0;
@@ -49,38 +59,100 @@ int metLine() {
     Serial.println("Met line");
     int right = 0;
     int left = 0;
-    while(!line[1] or !line[3] or line[0] or line[2] or line[4])
+    while((!line[1] or !line[3]))
     {
-        right = 0, left = 0;
         runSensors();
         if(line[1] or line[2] or line[3] or line [0] and line[4]) {
+            right = 0, left = 0;
             if(line[0]) right -= 2;
             if(line[4]) left -= 2;
             if(line[2]) right += 1, left += 1;
+            if(!line[3]) left += 1;
+            if(!line[1]) right += 1;
         }
-        else {
+        else if(line[0] or line[4]){
+            right = 0, left = 0;
             if(line[0]) left += 2;
             else right += 2;
         }
-        printSensors();
-        Serial.print(left);
-        Serial.print("\t");
-        Serial.println(right);
-        go(left + right, right - left);
+//        printSensors();
+//        Serial.print(left);
+//        Serial.print("\t");
+//        Serial.println(right);
+        go((left + right)/180.0*1, (-right + left) / (2*M_PI)*1);
     }
     return GOALONGLINE;
 }
 
 int findCandle() {
     Serial.println("Finding candle");
+    int left = 0, right = 0;
+    if (flame[0] or flame[1])
+    {
+        right = 2, left = -2;
+    }
+    else if(flame[3] or flame[4])
+    {
+        left = 2, right = -2;
+    }
+    runSensors();
+    while(!flame[2])
+    {
+        go((left + right) / 180.0 * 1, (-right + left) / (2 * M_PI) * 1);
+        runSensors();
+    }
+    return SOLVECANDLE;
 }
 
 int solveCandle() {
     Serial.println("Solving candle");
+    int terminate;
+    while(flame[2])
+    {
+        terminate = go(1);
+        if(terminate) return terminate;
+    }
+    if(!flame[2]) return ADJUSTCANDLE;
+}
+
+int kill() {
+    Serial.println("Killing candle");
+    digitalWrite(fanPin, HIGH);
+    delay(50);
+    for(int i = 0; i < 20; i++) {
+        go(0, 1);
+        delay(1);
+    }
+    for(int i = 0; i < 40; i++) {
+        go(0, -1);
+        delay(1);
+    }
+    digitalWrite(fanPin, LOW);
+    go(0, 20);
+    return GOBACK;
 }
 
 int metWall() {
     Serial.println("Met wall");
+}
+
+int adjustCandle() {
+    Serial.println("Adjust candle");
+    int end;
+    for(int i = 0; i < 10; i++)
+    {
+        end = go(0, (i % 2) ? pow(2, i) : -pow(2,i));
+        if(end) return end;
+    }
+    return GOBACK;
+}
+
+int goBack()
+{
+    Serial.println("Going back");
+    go(0, -140);
+    go(20);
+    return GOAHEAD;
 }
 
 /*

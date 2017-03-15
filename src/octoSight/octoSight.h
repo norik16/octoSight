@@ -13,7 +13,7 @@
 extern int state;
 
 //l in cm (possitive forward), angle in degrees (mathematical direction)
-int go(int l, int angle);
+int go(float l, float angle);
 
 //go straight
 int go(int l);

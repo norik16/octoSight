@@ -37,21 +37,21 @@ void runSensors() {
     flame[2] = analogRead(IR2Pin);
     flame[3] = analogRead(IR3Pin);
     flame[4] = analogRead(IR4Pin);
-
-    for (int i = 0; i < 5; i++) {
+    int i;
+    for (i = 0; i < 5; i++) {
         flame[i] = flameLimit - flame[i];
         if (flame[i] < 0) flame[i] = 0;
     }
 
-    for (int i = 0; i < 5; i++) {
+    for (i = 0; i < 5; i++) {
         /*if (median(lineMed[i], lineMedian) < whiteThreshold and lineRaw[i] > blackThreshold)
             line[i] = 1;*/
-        if (max(lastBlack, median(lineMed[i], lineMedian)) - lineRaw[i] > blackWhiteDiff ) {
+        if (/*max(lastBlack, median(lineMed[i], lineMedian)) - lineRaw[i] > blackWhiteDiff*/ lineRaw[i] < whiteThreshold) {
           line[i] = 0;
           lastWhite = lineRaw[i];
           lastWhiteAge = 0;
         }
-        else if (min(median(lineMed[i], lineMedian), lastWhite) - lineRaw[i] < -blackWhiteDiff) {
+        else if (/*min(median(lineMed[i], lineMedian), lastWhite) - lineRaw[i] < -blackWhiteDiff*/ lineRaw[i] > blackThreshold) {
           line[i] = 1;
           lastBlack = lineRaw[i];
           lastBlackAge = 0;
