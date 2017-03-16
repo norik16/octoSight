@@ -19,6 +19,7 @@ int goAlongLine();
 int goAhead();
 int metLine();
 int metWall();
+int metWallSolve();
 
 int findCandle();
 int solveCandle();

@@ -10,7 +10,7 @@
 //constants
 const float stepsPerCm = 27;
 const int d = 18.5; //wheel to wheel
-const float angleConst = 17.0/32; //turning constant
+const float angleConst = 0.5; //turning constant
 const int pi = 3.141592;
 
 const int mDelay = 700;
@@ -19,7 +19,12 @@ const long int lineBaseDelay = 500;
 //TODO: constant to try
 const float wheelRatio = 1.2;
 
-const int flameLimit = 500; //0(FIRE)-1024(DARKNESSS)
+
+const float leftSpeedMod = 1;
+const float timeMod = 8000;
+const int speedMod = 200;
+
+const int flameLimit[5] = {450, 300, 450, 450, 550}; //0(FIRE)-1024(DARKNESSS)
 
 #define wallLimit 50
 
@@ -27,7 +32,7 @@ const int flameLimit = 500; //0(FIRE)-1024(DARKNESSS)
 #define lineMedian 9 //number of last values to make median of
 const int lineAvgLng = lineMedian; //number of last values to make average of
 const int whiteThreshold = 200; //the lower, the whiter
-const int blackThreshold = 300; //the higher, the darker
+const int blackThreshold[5] = {330, 250, 330, 250, 330}; //the higher, the darker
 const int blackWhiteDiff = 150; //the higher, the darker
 
 
@@ -48,14 +53,21 @@ const int blackWhiteDiff = 150; //the higher, the darker
 #define KILL 7
 #define ADJUSTCANDLE 8
 #define GOBACK 9
+#define METWALLSOLVE 10
 
 //output
 
-//wheels
+//steppers
 #define leftDirPin 52
 #define leftStepPin 53
 #define rightDirPin 50
 #define rightStepPin 51
+
+//normal motors
+#define leftPower 12
+#define rightPower 11
+#define leftDir 9
+#define rightDir 10
 
 //fan
 #define fanPin 8
@@ -66,26 +78,26 @@ const int blackWhiteDiff = 150; //the higher, the darker
 #define IR0Pin A4
 #define IR1Pin A3
 #define IR2Pin A2
-#define IR3Pin A1
+#define IR3Pin A6
 #define IR4Pin A0
 
 //input digital
 
 //ultra sound from right to left
-#define US0inPin 18
+#define US0inPin 19
 #define US0outPin 14
-#define US1inPin 19
+#define US1inPin 20
 #define US1outPin 15
-#define US2inPin 20
+#define US2inPin 18
 #define US2outPin 16
-#define US3inPin 21
+#define US3inPin 3
 #define US3outPin 17
 
 //IR line from right to left
 #define line0Pin A14
 #define line1Pin A15
 #define line2Pin A13
-#define line3Pin A7
+#define line3Pin A8
 #define line4Pin A11
 
 //bumper from right to left

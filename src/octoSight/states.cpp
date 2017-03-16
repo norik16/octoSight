@@ -6,8 +6,8 @@
 #include "states.h"
 #include "Arduino.h"
 
-
-int corners = 0;
+int candleAngle;
+//int corners = 0;
 
 int terminate() {
     if(state != FINDCANDLE and state != SOLVECANDLE and state != ADJUSTCANDLE and (flame[0] or flame[1] or flame[2] or flame [3] or flame[4])) return FINDCANDLE;
@@ -16,19 +16,20 @@ int terminate() {
             
             break;
         case METWALL:
-            
+            if(line[0] or line[2] or line[4]) return METLINE;
             break;
         case METLINE:
-            //if(line[1] and line[3]) return GOALONGLINE;
+
             break;
         case GOALONGLINE:
             
             break;
         case SOLVECANDLE:
-            if(line[0] or line[1] or line[2] or line[3] or line[4]) return KILL;
+            if(line[0] or line[2] or line[4]) return KILL;
             break;
         case GOAHEAD:
-            if(line[0] or line[1] or line[2] or line[3] or line[4]) return METLINE;
+            if(line[0]or line[2] or line[4]) return METLINE;
+            if(USdis[1] < 30 or USdis[2] < 30) return METWALL;
             break;
         case KILL:
 
@@ -39,6 +40,10 @@ int terminate() {
         case GOBACK:
 
             break;
+        case METWALLSOLVE:
+            if(line[0]or line[2] or line[4]) return METLINE;
+            if(USdis[1] < 30 or USdis[2] < 30) return METWALL;
+            break;
     }
     return 0;
 }
@@ -46,20 +51,22 @@ int terminate() {
 int goAlongLine() {
     Serial.println("Going along line");
     go(0, 180);
-    go(50, -90);
+    go(50, -110);
     return GOAHEAD;
 }
 
 int goAhead() {
     Serial.println("Going ahead");
-    return go(500);
+    return go(600);
 }
 
 int metLine() {
     Serial.println("Met line");
-    int right = 0;
-    int left = 0;
-    while((!line[1] or !line[3]))
+    float right = 0;
+    float left = 0;
+    runSensors();
+    go(-5);
+    while(line[0] + line[1] + line[2] + line[3] + line[4])
     {
         runSensors();
         if(line[1] or line[2] or line[3] or line [0] and line[4]) {
@@ -81,12 +88,25 @@ int metLine() {
 //        Serial.println(right);
         go((left + right)/180.0*1, (-right + left) / (2*M_PI)*1);
     }
+    if(line[0] and line[1]) go(0, -60);
+    else if(line[0] and line[2]) go(0, -45);
+    else if(line[0] and line[3]) go(0, -15);
+    else if(line[1] and line[2]) go(0, -30);
+    else if(line[1] and line[4]) go(0, 15);
+    else if(line[2] and line[3]) go(0, 30);
+    else if(line[2] and line[4]) go(0, 45);
+    else if(line[3] and line[4]) go(0, 60);
     return GOALONGLINE;
 }
 
 int findCandle() {
     Serial.println("Finding candle");
     int left = 0, right = 0;
+    if(flame[0]) candleAngle = 80;
+    else if(flame[1]) candleAngle = 30;
+    else if(flame[3]) candleAngle = -30;
+    else if(flame[4]) candleAngle = -80;
+    else candleAngle = 0;
     if (flame[0] or flame[1])
     {
         right = 2, left = -2;
@@ -118,40 +138,81 @@ int solveCandle() {
 int kill() {
     Serial.println("Killing candle");
     digitalWrite(fanPin, HIGH);
-    delay(50);
+    delay(200);
     for(int i = 0; i < 20; i++) {
-        go(0, 1);
-        delay(1);
+        go(0, 2);
+        delay(100);
     }
     for(int i = 0; i < 40; i++) {
-        go(0, -1);
-        delay(1);
+        go(0, -2);
+        delay(100);
     }
     digitalWrite(fanPin, LOW);
+    delay(1000);
     go(0, 20);
+    delay(1000);
     return GOBACK;
 }
 
 int metWall() {
     Serial.println("Met wall");
+    go(0, -90);
+    return METWALLSOLVE;
+}
+
+int metWallSolve() {
+    Serial.println("Met wall solving");
+    while(USdis[0] < 60) go(10);
+    go(10);
+    go(0,90);
+    go(100);
+    go(0, 90);
+    return GOAHEAD;
 }
 
 int adjustCandle() {
     Serial.println("Adjust candle");
     int end;
+    end = go(20, 0);
+    if(end) return end;
     for(int i = 0; i < 10; i++)
     {
         end = go(0, (i % 2) ? pow(2, i) : -pow(2,i));
         if(end) return end;
     }
-    return GOBACK;
+    return SOLVECANDLE;
 }
 
 int goBack()
 {
     Serial.println("Going back");
-    go(0, -140);
-    go(20);
+    switch(candleAngle) {
+        case 80:
+            go(-20);
+            go(0, -140);
+            go(20);
+            break;
+        case 30:
+            go(0, 60);
+            go(30);
+            break;
+        case 0:
+            go(0, -90);
+            go(20);
+            go(0, 90);
+            go(40);
+            break;
+        case -80:
+            go(-20);
+            go(0, 140);
+            go(20);
+            break;
+        case -30:
+            go(0, -60);
+            go(30);
+            break;
+    }
+
     return GOAHEAD;
 }
 
