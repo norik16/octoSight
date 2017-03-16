@@ -73,6 +73,7 @@ void setup() {
 //    printSensors();
     for(int i = 0; i < 5; i++) line[i] = 0;
 //    printSensors();
+    digitalWrite(fanPin, LOW);
 
     state = GOAHEAD;
 }
@@ -94,6 +95,7 @@ void setup() {
 
     right > 0 ? digitalWrite(rightDir, LOW) : digitalWrite(rightDir, HIGH);
     left > 0 ? digitalWrite(leftDir, LOW) : digitalWrite(leftDir, HIGH);
+
 
     right = abs(right);
     left = abs(left);
@@ -124,7 +126,7 @@ void setup() {
             {
               //Serial.println("termnating");
                 analogWrite(leftPower, 0);
-                analogWrite(rightPower, 110);
+                analogWrite(rightPower, 0);
               return finished;
             }
 
@@ -132,7 +134,7 @@ void setup() {
 //        }
     }
       analogWrite(leftPower, 0);
-      analogWrite(rightPower, 110);
+      analogWrite(rightPower, 0);
       return 0;
 }
 
@@ -273,8 +275,13 @@ void loop() {
 //    runSensors();
 //    printSensors();
 
-//    go((1 + 2)/180.0*5, (-1 + 2) / (2*M_PI)*1);
-//    go(0, 90);
+////    go((1 + 2)/180.0*5, (-1 + 2) / (2*M_PI)*1);
+//    analogWrite(leftPower, 255);
+//    analogWrite(rightPower, 255);
+//    delay(500);
+//    digitalWrite(leftDir, HIGH);
+//    digitalWrite(rightDir, HIGH);
+//    go(0, 180);
 //    delay(5000);
 //    go(50, 90);
 //    delay(5000);

@@ -10,7 +10,7 @@
 //constants
 const float stepsPerCm = 27;
 const int d = 18.5; //wheel to wheel
-const float angleConst = 0.5; //turning constant
+const float angleConst = 0.55; //turning constant
 const int pi = 3.141592;
 
 const int mDelay = 700;
@@ -22,17 +22,17 @@ const float wheelRatio = 1.2;
 
 const float leftSpeedMod = 1;
 const float timeMod = 8000;
-const int speedMod = 200;
+const int speedMod = 255;
 
-const int flameLimit[5] = {450, 300, 450, 450, 550}; //0(FIRE)-1024(DARKNESSS)
+const int flameLimit[5] = {700, 500, 800, 650, 650}; //0(FIRE)-1024(DARKNESSS)
 
 #define wallLimit 50
 
 //line detection config
 #define lineMedian 9 //number of last values to make median of
 const int lineAvgLng = lineMedian; //number of last values to make average of
-const int whiteThreshold = 200; //the lower, the whiter
-const int blackThreshold[5] = {330, 250, 330, 250, 330}; //the higher, the darker
+const int whiteThreshold = 80; //the lower, the whiter
+const int blackThreshold[5] = {200, 200, 200, 200, 200}; //the higher, the darker
 const int blackWhiteDiff = 150; //the higher, the darker
 
 
@@ -64,10 +64,10 @@ const int blackWhiteDiff = 150; //the higher, the darker
 #define rightStepPin 51
 
 //normal motors
-#define leftPower 12
+#define leftPower 10
 #define rightPower 11
 #define leftDir 9
-#define rightDir 10
+#define rightDir 13
 
 //fan
 #define fanPin 8
@@ -76,8 +76,8 @@ const int blackWhiteDiff = 150; //the higher, the darker
 
 //IR candle from right to left
 #define IR0Pin A4
-#define IR1Pin A3
-#define IR2Pin A2
+#define IR1Pin A2
+#define IR2Pin A3
 #define IR3Pin A6
 #define IR4Pin A0
 

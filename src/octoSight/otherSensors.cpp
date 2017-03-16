@@ -47,12 +47,12 @@ void runSensors() {
         /*if (median(lineMed[i], lineMedian) < whiteThreshold and lineRaw[i] > blackThreshold)
             line[i] = 1;*/
         if (/*max(lastBlack, median(lineMed[i], lineMedian)) - lineRaw[i] > blackWhiteDiff*/ lineRaw[i] < whiteThreshold) {
-          line[i] = 0;
+          line[i] = 1;
           lastWhite = lineRaw[i];
           lastWhiteAge = 0;
         }
         else if (/*min(median(lineMed[i], lineMedian), lastWhite) - lineRaw[i] < -blackWhiteDiff*/ lineRaw[i] > blackThreshold[i]) {
-          line[i] = 1;
+          line[i] = 0;
           lastBlack = lineRaw[i];
           lastBlackAge = 0;
         }
